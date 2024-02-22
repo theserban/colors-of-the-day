@@ -74,14 +74,36 @@ function getColorsForDate(date) {
     return colors ? JSON.parse(colors) : null;
 }
 
-function changeDate(date) {
-    let colors = getColorsForDate(date);
-    if (!colors) {
-        colors = generateOppositeColors();
-        storeColorsForDate(date, colors);
+function changeDate(selectedDateString) {
+    // Parse the selected date string to a Date object
+    const selectedDate = new Date(selectedDateString);
+    
+    // Convert the selected date to UTC
+    selectedDate.setMinutes(selectedDate.getMinutes() + selectedDate.getTimezoneOffset());
+    
+    // Now use the selected UTC date to generate colors
+    const dateString = selectedDate.toISOString().slice(0, 10).replace(/-/g, '');
+    let hash = 0;
+    for (let i = 0; i < dateString.length; i++) {
+        let char = dateString.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
     }
-    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
+
+    let baseHue = Math.abs(hash) % 360;
+    
+    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
+    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
+    const primaryHex = HSLToHex(baseHue, 100, 50);
+    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
+
+    // Display the colors
+    displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex);
 }
+
+document.getElementById('datePicker').addEventListener('change', function() {
+    changeDate(this.value);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
