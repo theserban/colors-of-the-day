@@ -16,24 +16,25 @@ function generateOppositeColors() {
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
 
-function generateOppositeColorsForDay() {
-    // Get the current UTC date
-    const today = new Date();
-    const utcYear = today.getUTCFullYear();
-    const utcMonth = today.getUTCMonth() + 1; // getUTCMonth() returns 0-11
-    const utcDate = today.getUTCDate();
+function generateColorsForUTCDate() {
+    const todayUTC = new Date(Date.now());
+    todayUTC.setMinutes(todayUTC.getMinutes() + todayUTC.getTimezoneOffset()); // Convert to UTC
 
-    // Create a seed based on the UTC date
-    const seed = utcYear * 10000 + utcMonth * 100 + utcDate;
+    // Using ISO Date to get a YYYYMMDD formatted string
+    let dateString = todayUTC.toISOString().slice(0, 10).replace(/-/g, '');
 
-    // Simple hash function for variety
-    let hash = seed;
-    for (let i = 0; i < 'colorchallenge'.length; i++) {
-        hash = ((hash << 5) - hash) + 'colorchallenge'.charCodeAt(i);
+    // Hash the dateString to get a number for hue generation
+    let hash = 0;
+    for (let i = 0; i < dateString.length; i++) {
+        let char = dateString.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
     }
     
-    // Ensure the base hue is within 0-359
-    const baseHue = Math.abs(hash) % 360;
+    // Make sure we get a positive number for the hue
+    let baseHue = Math.abs(hash) % 360;
+    
+    // Generate HSL colors and convert to HEX
     const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
     const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
     const primaryHex = HSLToHex(baseHue, 100, 50);
@@ -41,8 +42,6 @@ function generateOppositeColorsForDay() {
     
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
-
-
 
 function HSLToHex(h, s, l) {
     l /= 100;
@@ -89,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
     document.getElementById('datePicker').max = today;
     document.getElementById('datePicker').value = today;
-    changeDate(today); // Initialize with stored or new colors for today
+    const colors = generateColorsForUTCDate();
+    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
 });
 
 function copyToClipboard(hexId) {
