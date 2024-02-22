@@ -16,6 +16,24 @@ function generateOppositeColors() {
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
 
+function generateOppositeColorsForDay() {
+    const today = new Date();
+    // Creating a unique seed from the date
+    const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+    // Simple hash function to ensure a wide range of hues
+    let hash = seed;
+    hash = ((hash << 5) - hash) + 'color'.charCodeAt(0);
+    hash = ((hash << 5) - hash) + 'challenge'.charCodeAt(1);
+    // Ensuring the base hue is within 0-359
+    const baseHue = Math.abs(hash) % 360;
+    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
+    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
+    const primaryHex = HSLToHex(baseHue, 100, 50);
+    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
+    return { primaryColor, secondaryColor, primaryHex, secondaryHex };
+}
+
+
 function HSLToHex(h, s, l) {
     l /= 100;
     const a = s * Math.min(l, 1 - l) / 100;
