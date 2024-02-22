@@ -9,36 +9,14 @@ function setTextContrast(color) {
 
 function generateOppositeColors() {
     const baseHue = Math.floor(Math.random() * 360);
-    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
-    const primaryHex = HSLToHex(baseHue, 100, 50);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
-    return { primaryColor, secondaryColor, primaryHex, secondaryHex };
-}
-
-function generateColorsForUTCDate() {
-    const todayUTC = new Date(Date.now());
-    todayUTC.setMinutes(todayUTC.getMinutes() + todayUTC.getTimezoneOffset()); // Convert to UTC
-
-    // Using ISO Date to get a YYYYMMDD formatted string
-    let dateString = todayUTC.toISOString().slice(0, 10).replace(/-/g, '');
-
-    // Hash the dateString to get a number for hue generation
-    let hash = 0;
-    for (let i = 0; i < dateString.length; i++) {
-        let char = dateString.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
-    }
+    const saturation = Math.floor(Math.random() * 50) + 50; // Saturation between 50% and 100%
+    const lightness = Math.floor(Math.random() * 30) + 20; // Lightness between 20% and 50%
     
-    // Make sure we get a positive number for the hue
-    let baseHue = Math.abs(hash) % 360;
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
+    const secondaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
     
-    // Generate HSL colors and convert to HEX
-    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
-    const primaryHex = HSLToHex(baseHue, 100, 50);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
+    const primaryHex = HSLToHex(baseHue, saturation, lightness);
+    const secondaryHex = HSLToHex((baseHue + 180) % 360, saturation, lightness);
     
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
@@ -74,44 +52,21 @@ function getColorsForDate(date) {
     return colors ? JSON.parse(colors) : null;
 }
 
-function changeDate(selectedDateString) {
-    // Parse the selected date string to a Date object
-    const selectedDate = new Date(selectedDateString);
-    
-    // Convert the selected date to UTC
-    selectedDate.setMinutes(selectedDate.getMinutes() + selectedDate.getTimezoneOffset());
-    
-    // Now use the selected UTC date to generate colors
-    const dateString = selectedDate.toISOString().slice(0, 10).replace(/-/g, '');
-    let hash = 0;
-    for (let i = 0; i < dateString.length; i++) {
-        let char = dateString.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
+function changeDate(date) {
+    let colors = getColorsForDate(date);
+    if (!colors) {
+        colors = generateOppositeColors();
+        storeColorsForDate(date, colors);
     }
-
-    let baseHue = Math.abs(hash) % 360;
-    
-    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
-    const primaryHex = HSLToHex(baseHue, 100, 50);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
-
-    // Display the colors
-    displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex);
+    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
 }
-
-document.getElementById('datePicker').addEventListener('change', function() {
-    changeDate(this.value);
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
     document.getElementById('datePicker').max = today;
     document.getElementById('datePicker').value = today;
-    const colors = generateColorsForUTCDate();
-    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
+    changeDate(today); // Initialize with stored or new colors for today
 });
 
 function copyToClipboard(hexId) {
