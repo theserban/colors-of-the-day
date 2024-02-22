@@ -7,10 +7,26 @@ function setTextContrast(color) {
     return brightness > 155 ? '#000' : '#FFF'; // Adjust threshold as needed
 }
 
-function generateOppositeColors() {
-    const baseHue = Math.floor(Math.random() * 360);
-    const saturation = Math.floor(Math.random() * 50) + 50; // Saturation between 50% and 100%
-    const lightness = Math.floor(Math.random() * 30) + 20; // Lightness between 20% and 50%
+function generateSeed(date) {
+    var hash = 0;
+    for (var i = 0; i < date.length; i++) {
+        var char = date.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+}
+
+function pseudoRandom(seed) {
+    var x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+}
+
+function generateOppositeColorsForDate(date) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 50) + 50; // Saturation between 50% and 100%
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 30) + 20; // Lightness between 20% and 50%
     
     const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
     const secondaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
@@ -55,7 +71,7 @@ function getColorsForDate(date) {
 function changeDate(date) {
     let colors = getColorsForDate(date);
     if (!colors) {
-        colors = generateOppositeColors();
+        colors = generateOppositeColorsForDate(date); // Use the date to generate colors
         storeColorsForDate(date, colors);
     }
     displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
