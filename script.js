@@ -1,48 +1,66 @@
+// This function remains unchanged
 function setTextContrast(color) {
     const hex = color.replace('#', '');
     const r = parseInt(hex.substr(0, 2), 16);
     const g = parseInt(hex.substr(2, 2), 16);
     const b = parseInt(hex.substr(4, 2), 16);
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness > 155 ? '#000' : '#FFF'; // Adjust threshold as needed
+    return brightness > 155 ? '#000' : '#FFF';
 }
 
-function generateOppositeColors() {
-    const baseHue = Math.floor(Math.random() * 360);
-    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
-    const primaryHex = HSLToHex(baseHue, 100, 50);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
-    return { primaryColor, secondaryColor, primaryHex, secondaryHex };
-}
-
-function generateColorsForUTCDate() {
-    const todayUTC = new Date(Date.now());
-    todayUTC.setMinutes(todayUTC.getMinutes() + todayUTC.getTimezoneOffset()); // Convert to UTC
-
-    // Using ISO Date to get a YYYYMMDD formatted string
-    let dateString = todayUTC.toISOString().slice(0, 10).replace(/-/g, '');
-
-    // Hash the dateString to get a number for hue generation
+// Updated to incorporate dynamic color harmonies based on date
+function generateColorHarmoniesForDate(dateString) {
+    // Convert dateString to a hash for consistent base hue generation
     let hash = 0;
     for (let i = 0; i < dateString.length; i++) {
         let char = dateString.charCodeAt(i);
         hash = ((hash << 5) - hash) + char;
         hash = hash & hash; // Convert to 32bit integer
     }
-    
-    // Make sure we get a positive number for the hue
     let baseHue = Math.abs(hash) % 360;
-    
-    // Generate HSL colors and convert to HEX
-    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
-    const primaryHex = HSLToHex(baseHue, 100, 50);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
-    
+
+    // Use baseHue to generate color harmonies
+    const harmonyTypes = ['analogous', 'complementary', 'triadic', 'tetradic'];
+    const selectedType = harmonyTypes[Math.abs(hash) % harmonyTypes.length];
+    let colors;
+    switch (selectedType) {
+        case 'analogous':
+            colors = [baseHue, (baseHue + 30) % 360, (baseHue + 60) % 360];
+            break;
+        case 'complementary':
+            colors = [baseHue, (baseHue + 180) % 360];
+            break;
+        case 'triadic':
+            colors = [baseHue, (baseHue + 120) % 360, (baseHue + 240) % 360];
+            break;
+        case 'tetradic':
+            colors = [baseHue, (baseHue + 90) % 360, (baseHue + 180) % 360, (baseHue + 270) % 360];
+            break;
+    }
+
+    const primaryColor = `hsl(${colors[0]}, 100%, 50%)`;
+    const secondaryColor = `hsl(${colors[1]}, 100%, 50%)`;
+    const primaryHex = HSLToHex(colors[0], 100, 50);
+    const secondaryHex = HSLToHex(colors[1], 100, 50);
+
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
 
+// Updated to use generateColorHarmoniesForDate with date-based logic
+function generateColorsForUTCDate() {
+    const todayUTC = new Date(Date.now());
+    todayUTC.setMinutes(todayUTC.getMinutes() + todayUTC.getTimezoneOffset()); // Convert to UTC
+    let dateString = todayUTC.toISOString().slice(0, 10).replace(/-/g, '');
+
+    let colors = getColorsForDate(dateString);
+    if (!colors) {
+        colors = generateColorHarmoniesForDate(dateString);
+        storeColorsForDate(dateString, colors);
+    }
+    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
+}
+
+// This function remains unchanged
 function HSLToHex(h, s, l) {
     l /= 100;
     const a = s * Math.min(l, 1 - l) / 100;
@@ -52,6 +70,35 @@ function HSLToHex(h, s, l) {
         return Math.round(255 * color).toString(16).padStart(2, '0');
     };
     return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+// This function remains unchanged
+function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
+    // Implementation remains the same
+}
+
+// This function remains unchanged
+function storeColorsForDate(date, colors) {
+    localStorage.setItem(date, JSON.stringify(colors));
+}
+
+// This function remains unchanged
+function getColorsForDate(date) {
+    return JSON.parse(localStorage.getItem(date));
+}
+
+// Updated to use generateColorHarmoniesForDate with selected date logic
+function changeDate(selectedDateString) {
+    const selectedDate = new Date(selectedDateString);
+    selectedDate.setMinutes(selectedDate.getMinutes() + selectedDate.getTimezoneOffset());
+    let dateString = selectedDate.toISOString().slice(0, 10).replace(/-/g, '');
+
+    let colors = getColorsForDate(dateString);
+    if (!colors) {
+        colors = generateColorHarmoniesForDate(dateString);
+        storeColorsForDate(dateString, colors);
+    }
+    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
 }
 
 function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
@@ -74,32 +121,6 @@ function getColorsForDate(date) {
     return colors ? JSON.parse(colors) : null;
 }
 
-function changeDate(selectedDateString) {
-    // Parse the selected date string to a Date object
-    const selectedDate = new Date(selectedDateString);
-    
-    // Convert the selected date to UTC
-    selectedDate.setMinutes(selectedDate.getMinutes() + selectedDate.getTimezoneOffset());
-    
-    // Now use the selected UTC date to generate colors
-    const dateString = selectedDate.toISOString().slice(0, 10).replace(/-/g, '');
-    let hash = 0;
-    for (let i = 0; i < dateString.length; i++) {
-        let char = dateString.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
-    }
-
-    let baseHue = Math.abs(hash) % 360;
-    
-    const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
-    const primaryHex = HSLToHex(baseHue, 100, 50);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
-
-    // Display the colors
-    displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex);
-}
 
 document.getElementById('datePicker').addEventListener('change', function() {
     changeDate(this.value);
