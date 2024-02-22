@@ -17,21 +17,31 @@ function generateOppositeColors() {
 }
 
 function generateOppositeColorsForDay() {
+    // Get the current UTC date
     const today = new Date();
-    // Creating a unique seed from the date
-    const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-    // Simple hash function to ensure a wide range of hues
+    const utcYear = today.getUTCFullYear();
+    const utcMonth = today.getUTCMonth() + 1; // getUTCMonth() returns 0-11
+    const utcDate = today.getUTCDate();
+
+    // Create a seed based on the UTC date
+    const seed = utcYear * 10000 + utcMonth * 100 + utcDate;
+
+    // Simple hash function for variety
     let hash = seed;
-    hash = ((hash << 5) - hash) + 'color'.charCodeAt(0);
-    hash = ((hash << 5) - hash) + 'challenge'.charCodeAt(1);
-    // Ensuring the base hue is within 0-359
+    for (let i = 0; i < 'colorchallenge'.length; i++) {
+        hash = ((hash << 5) - hash) + 'colorchallenge'.charCodeAt(i);
+    }
+    
+    // Ensure the base hue is within 0-359
     const baseHue = Math.abs(hash) % 360;
     const primaryColor = `hsl(${baseHue}, 100%, 50%)`;
     const secondaryColor = `hsl(${(baseHue + 180) % 360}, 100%, 50%)`;
     const primaryHex = HSLToHex(baseHue, 100, 50);
     const secondaryHex = HSLToHex((baseHue + 180) % 360, 100, 50);
+    
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
+
 
 
 function HSLToHex(h, s, l) {
