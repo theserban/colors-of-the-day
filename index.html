@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colors of the Day</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"  type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="Favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
+    <div>
+    <div class="logo">
+        <img src="logo.svg" width="120" height="80">
+    </div>
+   
     <div id="appContainer">
-       <label class="switch">
-         <br>
-  <input type="checkbox" id="themeToggle">
-  <span class="slider round"></span>
-</label>
+            <label class="switch">
+                <br><input type="checkbox" id="themeToggle">
+                 <span class="slider round"></span>
+            </label>
         <h2>Colors of the Day</h2>
         <p id="currentDate" hidden></p>
-        <p id="description">Challenge! Use today's colors in your design.</p>
+        <p id="description">Challenge! Use today's colors in your design.<br>Tag #upforcolors in your Instagram post.</p>
        
-       <input type="date" id="datePicker" onchange="changeDate(this.value)">
+        <input type="text" id="datePicker" onchange="changeDate(this.value)">
         <div id="colorsContainer">
             <div class="colorBox" id="primaryColor">
                 <div class="colorContent">
@@ -40,5 +47,6 @@
     </div>
   
     <script src="script.js"></script>
+</div>
 </body>
 </html>

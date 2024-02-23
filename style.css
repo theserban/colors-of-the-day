@@ -12,7 +12,8 @@
     --background-color: #333;
     --text-color: #fff;
     --container-bg-color: #444;
-    --button-bg-color: #888;
+    --button-bg-color: #777;
+    --calendar-bg-color: #333;
     --button-hover-bg-color: #666;
     --input-bg-color: #555; /* Darker for inputs */
     --input-text-color: #fff; 
@@ -23,7 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 90vh;
       margin: 0;
       background-color: var(--background-color);
       color: var(--text-color);
@@ -31,8 +32,8 @@
   
   #appContainer {
       background-color: var(--container-bg-color);
-      padding: 40px 40px 20px;
-      border-radius: 10px;
+      padding: 30px 30px 10px;
+      border-radius: 40px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
@@ -42,9 +43,9 @@
   }
   
   .colorBox {
-      width: 120px;
+      width: 140px;
       height: 120px;
-      border-radius: 10px;
+      border-radius: 15px;
       margin: 10px;
       display: flex;
       justify-content: center;
@@ -55,12 +56,6 @@
   .colorInfo {
       text-align: center;
   }
-  
-  
-  input[type="date"] {
-      margin: 20px 0;
-  }
-  
   
   .colorContent {
       display: flex;
@@ -78,9 +73,9 @@
       background-color: var(--button-bg-color);
       color: var(--text-color);
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       padding: 5px 10px;
-      margin-top: 8px;
+      margin-top: 12px;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       font-family: 'Lexend', sans-serif;
@@ -91,28 +86,11 @@
       color: var(--text-color);
   }
   
-  [data-theme="dark"] #datePicker {
-    filter: invert(1); /* This inverts the colors of the date picker, including the calendar icon */
-  }
-  
-  #datePicker {
-      /* ... existing styles ... */
-      background-color: var(--button-bg-color);
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-  }
-  
-  #datePicker:hover {
-      background-color: var(--button-hover-bg-color);
-  }
   #description {
       font-size: 1em;
       text-align: center;
       margin: 0;
-      padding: 10px;
+      padding: 6px;
   }
   
   #colorsContainer {
@@ -121,8 +99,23 @@
       margin-bottom: 20px;
   }
   
+
+  .logo {
+    text-align: center;
+  }
+
+ 
+.logo img {
+  filter: none; 
+}
+
+/* Dark theme styles */
+[data-theme="dark"] .logo img {
+  filter: invert(100%); /* Invert colors for dark theme */
+}
+
   .colorBox {
-      /* ... existing styles ... */
+
       margin: 10px; /* Adjust margin for side-by-side display */
   }
   
@@ -187,4 +180,17 @@
   
   input:checked + .slider:before {
     transform: translateX(16px); /* Adjusted for smaller slider */
+  }
+  .form-control{
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 10px;
+    margin-top: 20px;    /* Space above the date picker */
+    margin-bottom: 20px; /* Space below the date picker */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
   }

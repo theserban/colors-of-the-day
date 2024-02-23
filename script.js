@@ -18,9 +18,11 @@ function generateSeed(date) {
 }
 
 function pseudoRandom(seed) {
-    var x = Math.sin(seed++) * 10000;
+    var tempSeed = seed;
+    var x = Math.sin(tempSeed++) * 10000;
     return x - Math.floor(x);
 }
+
 
 function generateOppositeColorsForDate(date) {
     const seed = generateSeed(date);
@@ -83,6 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('datePicker').max = today;
     document.getElementById('datePicker').value = today;
     changeDate(today); // Initialize with stored or new colors for today
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // Ensure the switch reflects the current theme
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.checked = savedTheme === 'dark';
+
+    themeToggle.addEventListener('click', toggleTheme);
 });
 
 function copyToClipboard(hexId) {
@@ -106,3 +116,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 });
+document.addEventListener('DOMContentLoaded', () => {
+    // Other initialization code
+
+    // Initialize Flatpickr with maxDate set to today
+    flatpickr("#datePicker", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        defaultDate: new Date(), // Sets today's date as default
+        maxDate: new Date(), // Prevents selection of future dates
+        onChange: function(selectedDates, dateStr, instance) {
+            changeDate(dateStr); // Updates the application based on the selected date
+        }
+    });
+});
+function pseudoRandom(seed) {
+    var tempSeed = seed;
+    var x = Math.sin(tempSeed++) * 10000;
+    return x - Math.floor(x);
+}
+
