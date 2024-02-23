@@ -1,6 +1,6 @@
 <h1><a href="colors.designcrony.com">Colors of the day</a></h1>
 
-<h2>What is Colors of the Day?</h2>
+<h2>What is it?</h2>
 
 Colors of the Day is your daily dose of creativity! Brought to you by Design Crony, this cool app throws you a fun challenge: every day, it unlocks two new colors. Dive into your design tools, use these colors in your creations, and share your masterpieces on Instagram with #upforcolors. It's fun, it's fresh, and it's all about pushing your creative boundaries!
 
