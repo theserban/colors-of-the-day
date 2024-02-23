@@ -1,31 +1,3 @@
-:root {
-    /* Light theme colors */
-    --background-color: #f0f0f0;
-    --text-color: #000;
-    --text-color-inversed: #fff;
-    --text-days: #898989;
-    --text-days-future: #c2c2c2;
-    --container-bg-color: #fff;
-    --button-bg-color: #f0f0f0;
-    --button-hover-bg-color: #e0e0e0;
-  }
-  
-  [data-theme="dark"] {
-    /* Dark theme colors */
-    --background-color: #333;
-    --text-color: #fff;
-    --text-color-inversed: #444;
-    --text-days: #c2c2c2;
-    --text-days-future: #8a8a8a;
-    --container-bg-color: #444;
-    --button-bg-color: #777;
-    --calendar-bg-color: #333;
-    --button-hover-bg-color: #666;
-    --input-bg-color: #555; /* Darker for inputs */
-    --input-text-color: #fff; 
-    --input-border-color: #666; 
-  }
-  
   .form-control{
     text-align: center;
     font-family: 'Lexend', sans-serif;
@@ -603,7 +575,7 @@
   .flatpickr-day.startRange.nextMonthDay,
   .flatpickr-day.endRange.nextMonthDay {
     border-radius: 8px; 
-    background: var(--primary-color);
+    background: var(--colors-switch);
     -webkit-box-shadow: none;
             box-shadow: none;
     color: #fff;    

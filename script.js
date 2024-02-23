@@ -61,6 +61,7 @@ function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
 
     // Set the primary color as a CSS variable
     document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
 }
 
 

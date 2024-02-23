@@ -2,15 +2,22 @@
   /* Light theme colors */
   --background-color: #f0f0f0;
   --text-color: #000;
+  --text-color-inversed: #fff;
+  --text-days: #898989;
+  --text-days-future: #c2c2c2;
   --container-bg-color: #fff;
   --button-bg-color: #f0f0f0;
   --button-hover-bg-color: #e0e0e0;
+  --colors-switch: var(--primary-color);
 }
 
 [data-theme="dark"] {
   /* Dark theme colors */
   --background-color: #333;
   --text-color: #fff;
+  --text-color-inversed: #444;
+  --text-days: #c2c2c2;
+  --text-days-future: #8a8a8a;
   --container-bg-color: #444;
   --button-bg-color: #777;
   --calendar-bg-color: #333;
@@ -18,7 +25,13 @@
   --input-bg-color: #555; /* Darker for inputs */
   --input-text-color: #fff; 
   --input-border-color: #666; 
+  --colors-switch: var(--secondary-color);
 }
+
+[data-theme="dark"] .logo img {
+  filter: invert(100%); /* Invert colors for dark theme */
+  }
+
 body {
     font-family: 'Lexend', sans-serif;
     display: flex;
@@ -86,11 +99,15 @@ body {
     color: var(--text-color);
 }
 
-#description {
+.description {
     font-size: 1em;
     text-align: center;
     margin: 0;
     padding: 6px;
+}
+
+.highlight-color {
+  color: var(--colors-switch);
 }
 
 #colorsContainer {
@@ -99,39 +116,12 @@ body {
     margin-bottom: 20px;
 }
 
-
 .logo {
   text-align: center;
 }
 
-
 .logo img {
 filter: none; 
-}
-
-/* Dark theme styles */
-[data-theme="dark"] .logo img {
-filter: invert(100%); /* Invert colors for dark theme */
-}
-
-.colorBox {
-
-    margin: 10px; /* Adjust margin for side-by-side display */
-}
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
 }
 
 /* The switch - the box around the slider */
@@ -149,6 +139,13 @@ filter: invert(100%); /* Invert colors for dark theme */
   height: 0;
 }
 
+/* Hide default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
 /* The slider */
 .slider {
   position: absolute;
@@ -157,7 +154,7 @@ filter: invert(100%); /* Invert colors for dark theme */
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--primary-color);
   transition: .4s;
   border-radius: 24px; /* Adjust for rounded corners */
 }
@@ -175,7 +172,7 @@ filter: invert(100%); /* Invert colors for dark theme */
 }
 
 input:checked + .slider {
-  background-color: #808080;
+  background-color: var(--secondary-color);
 }
 
 input:checked + .slider:before {
@@ -191,5 +188,4 @@ input:checked + .slider:before {
   body {
     background-color: var(--container-bg-color);
 }
-
 }
