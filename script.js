@@ -58,7 +58,11 @@ function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
     document.getElementById('secondaryHex').textContent = secondaryHex;
     primaryColorBox.style.color = setTextContrast(primaryHex);
     secondaryColorBox.style.color = setTextContrast(secondaryHex);
+
+    // Set the primary color as a CSS variable
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
 }
+
 
 function storeColorsForDate(date, colors) {
     localStorage.setItem(date, JSON.stringify(colors));
