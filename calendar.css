@@ -15,8 +15,6 @@
   
 
 .flatpickr-calendar {
-    left: 50% !important;
-    transform: translatex(-50%);
     background: transparent;
     opacity: 0;
     display: none;
@@ -802,6 +800,7 @@
 
   @media (max-width: 768px) {
     .flatpickr-calendar {
-        width: auto;
+        left: 50% !important;
+        transform: translatex(-50%);
       }
   }
