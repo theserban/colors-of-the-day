@@ -25,6 +25,22 @@
     --input-text-color: #fff; 
     --input-border-color: #666; 
   }
+  
+  .form-control{
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+    font-size: 1em;
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 10px;
+    margin-top: 20px;    /* Space above the date picker */
+    margin-bottom: 20px; /* Space below the date picker */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
 
 .flatpickr-calendar {
     background: transparent;
