@@ -11,7 +11,6 @@
     <link rel="icon" type="image/x-icon" href="Favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <meta name="theme-color" content="#123456"> 
 </head>
 <body>
     <div class="github-light">
@@ -29,8 +28,9 @@
             <div class="title"><h2>Colors of the Day</h2></div>
         <p id="currentDate" hidden></p>
         <p class="description">Challenge! Use today's colors in your design.<br>Tag <span class="highlight-color"><b>#upforcolors</b></span> in your Instagram post.</p>
-       
-        <input id="datePicker" onchange="changeDate(this.value)" autocomplete="nope">
+        <form autocomplete="off" method="post" action="">
+        <input autocomplete="false" name="hidden" id="datePicker" onchange="changeDate(this.value)">
+        </form>
         <div id="colorsContainer">
             <div class="colorBox" id="primaryColor">
                 <div class="colorContent">
