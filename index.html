@@ -28,7 +28,7 @@
         <p id="currentDate" hidden></p>
         <p id="description">Challenge! Use today's colors in your design.<br>Tag #upforcolors in your Instagram post.</p>
        
-        <input type="text" id="datePicker" onchange="changeDate(this.value)">
+        <input type="text" id="datePicker" onchange="changeDate(this.value)" autocomplete="off">
         <div id="colorsContainer">
             <div class="colorBox" id="primaryColor">
                 <div class="colorContent">
@@ -44,8 +44,7 @@
                     <span id="secondaryHex">#DFDCFF</span>
                     <button class="copyButton" onclick="copyToClipboard('#secondaryHex')">Copy</button>
                 </div>
-            </div>
-          
+            </div>  
         </div>
     </div>
   
