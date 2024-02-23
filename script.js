@@ -250,4 +250,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
      document.querySelector("#datePicker").setAttribute("autocomplete", "nope");
 });
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the value of the CSS variable
+  const rootStyle = getComputedStyle(document.documentElement);
+  const themeColor = rootStyle.getPropertyValue('--primary-color').trim();
+
+  // Check if a meta theme-color tag already exists
+  let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+  if(metaThemeColor) {
+    // If it exists, just update its content
+    metaThemeColor.setAttribute("content", themeColor);
+  } else {
+    // If it does not exist, create it and append to <head>
+    metaThemeColor = document.createElement('meta');
+    metaThemeColor.setAttribute("name", "theme-color");
+    metaThemeColor.setAttribute("content", themeColor);
+    document.getElementsByTagName('head')[0].appendChild(metaThemeColor);
+  }
+});
 
