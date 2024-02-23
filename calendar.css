@@ -402,6 +402,7 @@
     position: relative;
     vertical-align: initial;
     width: auto;
+    text-align: center;
 }
   .flatpickr-current-month .flatpickr-monthDropdown-months:focus,
   .flatpickr-current-month .flatpickr-monthDropdown-months:active {

@@ -22,6 +22,7 @@ function pseudoRandom(seed) {
     return x - Math.floor(x);
 }
 
+
 function generateOppositeColorsForDate(date) {
     const seed = generateSeed(date);
     const baseHue = Math.floor(pseudoRandom(seed) * 360);
@@ -36,6 +37,97 @@ function generateOppositeColorsForDate(date) {
     
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
+
+// Analogous Harmony
+function generateAnalogousColorsForDate(date) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
+    
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
+    const secondaryColor = `hsl(${(baseHue + 30) % 360}, ${saturation}%, ${lightness}%)`; // +30 degrees for analogous
+    
+    return {
+        primaryColor,
+        secondaryColor,
+        primaryHex: HSLToHex(baseHue, saturation, lightness),
+        secondaryHex: HSLToHex((baseHue + 30) % 360, saturation, lightness)
+    };
+}
+
+// Triadic Harmony
+function generateTriadicColorsForDate(date) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
+    
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
+    const secondaryColor = `hsl(${(baseHue + 120) % 360}, ${saturation}%, ${lightness}%)`; // +120 degrees for triadic
+    
+    return {
+        primaryColor,
+        secondaryColor,
+        primaryHex: HSLToHex(baseHue, saturation, lightness),
+        secondaryHex: HSLToHex((baseHue + 120) % 360, saturation, lightness)
+    };
+}
+
+// Split-Complementary Harmony
+function generateSplitComplementaryColorsForDate(date) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
+    
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;    
+    return {
+        primaryColor,
+        secondaryColor: splitComp1,
+        primaryHex: HSLToHex(baseHue, saturation, lightness),
+        secondaryHex: HSLToHex((baseHue + 150) % 360, saturation, lightness)
+    };
+}
+
+// Tetradic Harmony
+function generateTetradicColorsForDate(date) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const secondHue = (baseHue + 120) % 360; // +120 degrees for the second color
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
+    
+    // The first complementary pair
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
+    const complementaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
+    
+    return {
+        primaryColor,
+        secondaryColor: complementaryColor,
+        primaryHex: HSLToHex(baseHue, saturation, lightness),
+        secondaryHex: HSLToHex((baseHue + 180) % 360, saturation, lightness)
+    };
+}
+
+// Square Harmony
+function generateSquareColorsForDate(date) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
+    
+    // Four colors spaced evenly (90 degrees apart)
+    const secondHue = (baseHue + 90) % 360;
+    
+    return {
+        primaryColor: `hsl(${baseHue}, ${saturation}%, ${lightness}%)`,
+        secondaryColor: `hsl(${secondHue}, ${saturation}%, ${lightness}%)`,
+        primaryHex: HSLToHex(baseHue, saturation, lightness),
+        secondaryHex: HSLToHex(secondHue, saturation, lightness)
+    };
+}
+
 
 
 function HSLToHex(h, s, l) {
@@ -79,7 +171,28 @@ function getColorsForDate(date) {
 function changeDate(date) {
     let colors = getColorsForDate(date);
     if (!colors) {
-        colors = generateOppositeColorsForDate(date); // Use the date to generate colors
+        // Randomly select a color harmony
+        const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 3); // Generate a number between 0 and 2
+        switch (harmonySelector) {
+            case 0:
+                colors = generateOppositeColorsForDate(date);
+                break;
+            case 1:
+                colors = generateAnalogousColorsForDate(date);
+                break;
+            case 2:
+                colors = generateTriadicColorsForDate(date);
+                break;
+            case 3:
+                colors = generateSplitComplementaryColorsForDate(date);
+                break;
+            case 4:
+                colors = generateTetradicColorsForDate(date);
+                break;
+            case 5:
+                colors = generateSquareColorsForDate(date);
+                break;
+        }
         storeColorsForDate(date, colors);
     }
     displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
