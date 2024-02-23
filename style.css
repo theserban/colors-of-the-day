@@ -197,4 +197,11 @@ input:checked + .slider:before {
   body {
     background-color: var(--container-bg-color);
 }
+.github-logo{
+  fill:var(--background-color);
+  color:var(--text-color); 
+  position: absolute; 
+  top: 0; border: 0; right: 0; 
+  aria-hidden="true";
+  }
 }
