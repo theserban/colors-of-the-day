@@ -184,6 +184,7 @@
   .form-control{
     text-align: center;
     font-family: 'Lexend', sans-serif;
+    font-size: 1em;
     background-color: var(--button-bg-color);
     color: var(--text-color);
     border: none;

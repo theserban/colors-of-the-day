@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dateFormat: "Y-m-d",
         defaultDate: new Date(), // Sets today's date as default
         maxDate: new Date(), // Prevents selection of future dates
+        disableMobile: true, // Disables the mobile-friendly version
         onChange: function(selectedDates, dateStr, instance) {
             changeDate(dateStr); // Updates the application based on the selected date
         }
