@@ -248,6 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
             changeDate(dateStr); // Updates the application based on the selected date
         }
     });
-     document.querySelector("#datePicker").setAttribute("autocomplete", "off");
+     document.querySelector("#datePicker").setAttribute("autocomplete", "nope");
 });
 
