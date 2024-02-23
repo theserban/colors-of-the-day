@@ -25,7 +25,7 @@
     --input-text-color: #fff; 
     --input-border-color: #666; 
   }
-  
+
   .form-control{
     text-align: center;
     font-family: 'Lexend', sans-serif;
@@ -74,10 +74,7 @@
     display: inline-block;
     z-index: 99999;
   }
-  .flatpickr-calendar.animate.open {
-    -webkit-animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
-            animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
-  }
+
   .flatpickr-calendar.inline {
     display: block;
     position: relative;
@@ -168,9 +165,13 @@
     outline: 0;
   }
   .flatpickr-wrapper {
-    position: relative;
-    display: inline-block;
-  }
+    display: flex; /* Use flexbox to center the child elements */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically, if applicable */
+    position: relative; /* Needed for absolute positioning of the calendar */
+    width: 100%; /* Take full width to center content properly */
+}
+
   .flatpickr-months {
     display: -webkit-box;
     display: -webkit-flex;
@@ -828,3 +829,31 @@
               transform: translate3d(0, 0, 0);
     }
   }
+  /* Responsive adjustments */
+@media (max-width: 768px) { /* Adjust this breakpoint as needed */
+    .flatpickr-calendar {
+        width: auto; /* Allows the calendar to expand based on content */
+        max-width: 90%; /* Prevents the calendar from being too wide on small screens */
+        left: 50%; /* Start from the middle */
+        transform: translateX(-50%); /* Shift it back to the center */
+    }
+
+    .flatpickr-wrapper {
+        display: flex; /* Enables flexbox */
+        justify-content: center; /* Centers the child horizontally */
+        align-items: center; /* Centers the child vertically (if applicable) */
+        height: 100%; /* Ensure the wrapper takes up necessary space (adjust as needed) */
+    }
+}
+
+/* Ensure the calendar is always centered relative to its trigger button */
+.flatpickr-wrapper {
+    position: relative; /* Context for absolute positioning */
+}
+
+.flatpickr-calendar {
+    position: absolute; /* Already set, just ensuring it's noted for context */
+    top: 100%; /* Adjust as needed to position below the button */
+    left: 50%; /* Start from the middle of the parent */
+    transform: translateX(-50%); /* Center it */
+}
