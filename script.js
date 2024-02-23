@@ -18,17 +18,15 @@ function generateSeed(date) {
 }
 
 function pseudoRandom(seed) {
-    var tempSeed = seed;
-    var x = Math.sin(tempSeed++) * 10000;
+    var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
 }
-
 
 function generateOppositeColorsForDate(date) {
     const seed = generateSeed(date);
     const baseHue = Math.floor(pseudoRandom(seed) * 360);
-    const saturation = Math.floor(pseudoRandom(seed + 1) * 50) + 50; // Saturation between 50% and 100%
-    const lightness = Math.floor(pseudoRandom(seed + 2) * 30) + 20; // Lightness between 20% and 50%
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60; // Saturation between 60% and 100%
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40; // Lightness between 40% and 60%
     
     const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
     const secondaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
@@ -38,6 +36,7 @@ function generateOppositeColorsForDate(date) {
     
     return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
+
 
 function HSLToHex(h, s, l) {
     l /= 100;
@@ -98,9 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function copyToClipboard(hexId) {
     const hexCode = document.querySelector(hexId).textContent;
     navigator.clipboard.writeText(hexCode).then(() => {
-        alert(hexCode + ' copied to clipboard!');
-    }, (err) => {
-        console.error('Could not copy text: ', err);
+        
     });
 }
 
@@ -126,15 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
         dateFormat: "Y-m-d",
         defaultDate: new Date(), // Sets today's date as default
         maxDate: new Date(), // Prevents selection of future dates
-        disableMobile: true, // Disables the mobile-friendly version
         onChange: function(selectedDates, dateStr, instance) {
             changeDate(dateStr); // Updates the application based on the selected date
         }
     });
+    document.querySelector("#datePicker").setAttribute("autocomplete", "off");
 });
-function pseudoRandom(seed) {
-    var tempSeed = seed;
-    var x = Math.sin(tempSeed++) * 10000;
-    return x - Math.floor(x);
-}
 
