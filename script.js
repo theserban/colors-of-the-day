@@ -49,6 +49,8 @@ function HSLToHex(h, s, l) {
     return `#${f(0)}${f(8)}${f(4)}`;
 }
 
+
+
 function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
     const primaryColorBox = document.getElementById('primaryColor');
     const secondaryColorBox = document.getElementById('secondaryColor');
