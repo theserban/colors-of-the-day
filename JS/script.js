@@ -199,11 +199,16 @@ function changeDate(date) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
-    document.getElementById('datePicker').max = today;
-    document.getElementById('datePicker').value = today;
-    changeDate(today); // Initialize with stored or new colors for today
+    // Adjust to use local date components
+    const today = new Date();
+    const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+    
+    document.getElementById('currentDate').textContent = today.toLocaleDateString();
+    document.getElementById('datePicker').max = localDateStr;
+    document.getElementById('datePicker').value = localDateStr;
+
+    changeDate(localDateStr); // Initialize with stored or new colors for today
+
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
 
