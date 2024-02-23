@@ -1,3 +1,3 @@
 A simple app that helps you decide what colors to use in your design :)
 
-<img width="675" alt="Screenshot 2024-02-22 at 01 46 41" src="https://github.com/theserban/colors-of-the-day/assets/134176220/ef3f592f-4515-4576-94f4-78d510655cba">
+<img width="550" alt="Screenshot 2024-02-23 at 12 49 28" src="https://github.com/theserban/colors-of-the-day/assets/134176220/31d67f58-f7a5-4355-96b3-b56c66bae61a">
