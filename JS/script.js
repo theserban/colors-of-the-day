@@ -465,3 +465,34 @@ document.body.appendChild(downloadLink);
 downloadLink.click();
 document.body.removeChild(downloadLink);
 }
+
+function startCountdown() {
+    function updateCountdown() {
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0); // Set to midnight
+
+        const msLeft = tomorrow - now; // Milliseconds until midnight
+        const hours = Math.floor(msLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((msLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((msLeft % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').textContent = `Time left: ${hours}h ${minutes}m ${seconds}s`;
+
+        if (msLeft <= 1000) {
+            clearInterval(countdownInterval); // Stop the countdown
+            const today = new Date();
+            const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+            changeDate(localDateStr); // Update colors for the new day
+        }
+    }
+
+    updateCountdown(); // Run once immediately
+    const countdownInterval = setInterval(updateCountdown, 1000); // Then every second
+}
+
+// Initialize countdown on page load
+document.addEventListener('DOMContentLoaded', () => {
+    startCountdown();
+});

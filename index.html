@@ -33,7 +33,7 @@
         <p class="description">Challenge! Use today's colors in your design.<br>Tag <span class="highlight-color"><b>#upforcolors</b></span> in your Instagram post.</p>
         <form autocomplete="off" method="post" action="">
         <input autocomplete="false" name="hidden" id="datePicker" onchange="changeDate(this.value)">
-        </form>
+        </form> 
         <div id="colorsContainer">
             <div class="colorBox" id="primaryColor">
                 <div class="colorContent">
@@ -52,6 +52,10 @@
            </div>
         <button class="shareButton" id="shareButton" onclick="shareColors()">Download SVG Tints & Shades</button>
     </div>
+    <div id="countdownContainer">
+        <p id="countdown"></p>
+    </div>
 </div>
+
 </body>
 </html>

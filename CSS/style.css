@@ -114,7 +114,7 @@ body {
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  margin-top: 12px;
+  margin-top: 20px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Lexend', sans-serif;
@@ -223,32 +223,16 @@ input:checked + .slider:before {
   top: 0; border: 0; right: 0; 
   aria-hidden="true";
   }
+  
+  #countdownContainer {
+    text-align: center;
+    font-size: 1em;
+  }
 }
 
-#colorDisplayArea h1, #colorDisplayArea p {
-  color: black; /* Ensures text is black against the white background */
+#countdownContainer {
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1em;
 }
-
-.colorBox {
-  margin-bottom: 20px;
-}
-
-.colorSample {
-  width: 150px; /* Adjust width as needed */
-  height: 150px; /* Adjust height as needed */
-  border-radius: 15px; /* Gives the rounded rectangle shape */
-  margin: 10px 0; /* Space between label and color sample */
-}
-
-.colorHex {
-  color: black; /* Ensures hex code text is black */
-}
-
-/* Styling for the labels */
-#colorDisplayArea span {
-  display: block;
-  color: black;
-  font-weight: bold;
-}
-
-/* Additional styling to ensure layout and appearance match your requirements */
