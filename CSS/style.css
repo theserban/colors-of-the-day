@@ -64,6 +64,18 @@ body {
     max-width: 420px;
 }
 
+#appContainerShare {
+  background-color: var(--container-bg-color);
+  padding: 2px 30px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: 450px;
+  max-height: 450px;
+}
+
 .colorBox {
     width: 140px;
     height: 120px;
@@ -108,11 +120,43 @@ body {
     color: var(--text-color);
 }
 
+.shareButton {
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 6px;
+  padding: 7px 15px;
+  margin-top: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Lexend', sans-serif;
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+
+.shareButton:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--text-color);
+}
+
 .description {
     font-size: 1em;
     text-align: center;
     margin: 0;
     padding: 6px;
+}
+
+.descriptionShare {
+  font-size: 1em;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.titleShare {
+  font-size: 1em;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 0px;
 }
 
 .highlight-color {
@@ -122,12 +166,18 @@ body {
 #colorsContainer {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-top: 4px;
+}
+
+#colorsContainerShare {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
 }
 
 .logo {
   text-align: center;
-}
+} 
 
 .logo img {
 filter: none; 
@@ -205,3 +255,31 @@ input:checked + .slider:before {
   aria-hidden="true";
   }
 }
+
+#colorDisplayArea h1, #colorDisplayArea p {
+  color: black; /* Ensures text is black against the white background */
+}
+
+.colorBox {
+  margin-bottom: 20px;
+}
+
+.colorSample {
+  width: 150px; /* Adjust width as needed */
+  height: 150px; /* Adjust height as needed */
+  border-radius: 15px; /* Gives the rounded rectangle shape */
+  margin: 10px 0; /* Space between label and color sample */
+}
+
+.colorHex {
+  color: black; /* Ensures hex code text is black */
+}
+
+/* Styling for the labels */
+#colorDisplayArea span {
+  display: block;
+  color: black;
+  font-weight: bold;
+}
+
+/* Additional styling to ensure layout and appearance match your requirements */

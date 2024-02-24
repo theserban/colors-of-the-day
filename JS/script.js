@@ -255,3 +255,206 @@ document.addEventListener('DOMContentLoaded', () => {
     });
      document.querySelector("#datePicker").setAttribute("autocomplete", "nope");
 });
+
+// Parse an input string, looking for any number of hexadecimal color
+// values, possibly with whitespace or garbage in between.  Return an array of
+// color values. Supports hex shorthand.
+function parseColorValues(colorValues) {
+    var colorValuesArray = colorValues.match(/\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g);
+    if (colorValuesArray) {
+      colorValuesArray = colorValuesArray.map(
+        function (item) {
+          if (item.length === 3) {
+            var newItem = item.toString().split('');
+            newItem = newItem.reduce(function (acc, it) {
+              return acc + it + it;
+            }, '');
+            return newItem;
+          }
+          return item;
+        }
+      );
+    }
+    return colorValuesArray; // this could be null if there are no matches
+  }
+  
+  // Pad a hexadecimal string with zeros if it needs it
+  function pad(number, length) {
+    var str = '' + number;
+    while (str.length < length) {
+      str = '0' + str;
+    }
+    return str;
+  }
+  
+  // Convert a hex string into an object with red, green, blue numeric properties
+  // '501214' => { red: 80, green: 18, blue: 20 }
+  function hexToRGB(colorValue) {
+    return {
+      red: parseInt(colorValue.substr(0, 2), 16),
+      green: parseInt(colorValue.substr(2, 2), 16),
+      blue: parseInt(colorValue.substr(4, 2), 16)
+    }
+  }
+  
+  // Convert an integer to a 2-char hex string
+  // for sanity, round it and ensure it is between 0 and 255
+  // 43 => '2b'
+  function intToHex(rgbint) {
+    return pad(Math.min(Math.max(Math.round(rgbint), 0), 255).toString(16), 2);
+  }
+  
+  // Convert one of our rgb color objects to a full hex color string
+  // { red: 80, green: 18, blue: 20 } => '501214'
+  function rgbToHex(rgb) {
+    return intToHex(rgb.red) + intToHex(rgb.green) + intToHex(rgb.blue);
+  }
+  
+  // Shade one of our rgb color objects to a distance of i*10%
+  function rgbShade(rgb, i) {
+    return {
+      red: Math.max(0, Math.round(rgb.red * (1 - 0.1 * i))),
+      green: Math.max(0, Math.round(rgb.green * (1 - 0.1 * i))),
+      blue: Math.max(0, Math.round(rgb.blue * (1 - 0.1 * i)))
+    };
+  }
+  
+  // Tint one of our rgb color objects to a distance of i*10%
+  function rgbTint(rgb, i) {
+    return {
+      red: Math.min(255, Math.round(rgb.red + (255 - rgb.red) * i * 0.1)),
+      green: Math.min(255, Math.round(rgb.green + (255 - rgb.green) * i * 0.1)),
+      blue: Math.min(255, Math.round(rgb.blue + (255 - rgb.blue) * i * 0.1))
+    };
+  }
+  
+  // Calculate shades of a color in 10% increments
+  function calculateShades(colorValue) {
+    const color = hexToRGB(colorValue);
+    const shadeValues = [];
+  
+    for (let i = 1; i <= 10; i++) {
+      shadeValues.push(rgbToHex(rgbShade(color, i)));
+    }
+    return shadeValues;
+  }
+  
+  // Calculate tints of a color in 10% increments
+  function calculateTints(colorValue) {
+    const color = hexToRGB(colorValue);
+    const tintValues = [];
+  
+    for (let i = 1; i <= 10; i++) {
+      tintValues.push(rgbToHex(rgbTint(color, i)));
+    }
+    return tintValues;
+  }
+  
+  function shareColors() {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '2000');
+    svg.setAttribute('height', '1600'); // Adjusted height to fit the color rectangles
+
+    const primaryHex = document.getElementById('primaryHex').textContent;
+    const secondaryHex = document.getElementById('secondaryHex').textContent;
+    const selectedDate = document.getElementById('datePicker').value;
+
+    function drawRectWithText(x, y, width, height, fillColor, textColor, text) {
+        const rect = document.createElementNS(svgNS, 'rect');
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y);
+        rect.setAttribute('width', width);
+        rect.setAttribute('height', height);
+        rect.setAttribute('fill', fillColor);
+        svg.appendChild(rect);
+
+        const textElement = document.createElementNS(svgNS, 'text');
+        textElement.setAttribute('x', x + width / 2);
+        textElement.setAttribute('y', y + height / 2);
+        textElement.setAttribute('text-anchor', 'middle');
+        textElement.setAttribute('alignment-baseline', 'middle');
+        textElement.setAttribute('fill', textColor);
+        textElement.setAttribute('font-family', 'Lexend');
+        textElement.setAttribute('font-weight', 'bold');
+        textElement.setAttribute('font-size', '30px');
+       
+        textElement.textContent = text;
+        svg.appendChild(textElement);
+    }
+
+    // Adjusted dimensions and positions
+    const columnWidth = 1000; // Full width for each color's column
+    const rectWidth = columnWidth / 2;
+    const rectHeight = (1600 / 10); // This makes the height equal to a tint or shade rectangle
+    const tintsAndShadesHeight = (1600 - rectHeight) / 10; // Allocate remaining height for tints and shades
+
+    // Draw primary color bar at the top with dynamic text color based on contrast
+    drawRectWithText(0, 0, 1000, rectHeight, primaryHex, setTextContrast(primaryHex), primaryHex);
+
+    // Draw secondary color rectangle next to the primary, also with dynamic text color
+    drawRectWithText(1000, 0, 1000, rectHeight, secondaryHex, setTextContrast(secondaryHex), secondaryHex);
+
+
+    // Adjusted function to calculate tints and shades
+    // Assuming calculateTints and calculateShades functions are defined elsewhere
+
+    // Draw primary color tints and shades
+    const primaryTints = calculateTints(primaryHex.substr(1));
+    primaryTints.forEach((tint, index) => {
+        drawRectWithText(0, rectHeight + index * tintsAndShadesHeight, rectWidth, tintsAndShadesHeight, '#' + tint, 'black', '#' + tint);
+    });
+
+    const primaryShades = calculateShades(primaryHex.substr(1));
+    primaryShades.forEach((shade, index) => {
+        drawRectWithText(rectWidth, rectHeight + index * tintsAndShadesHeight, rectWidth, tintsAndShadesHeight, '#' + shade, 'white', '#' + shade);
+    });
+
+    // Draw secondary color tints and shades
+    const secondaryTints = calculateTints(secondaryHex.substr(1));
+    secondaryTints.forEach((tint, index) => {
+        drawRectWithText(columnWidth, rectHeight + index * tintsAndShadesHeight, rectWidth, tintsAndShadesHeight, '#' + tint, 'black', '#' + tint);
+    });
+
+    const secondaryShades = calculateShades(secondaryHex.substr(1));
+    secondaryShades.forEach((shade, index) => {
+        drawRectWithText(columnWidth + rectWidth, rectHeight + index * tintsAndShadesHeight, rectWidth, tintsAndShadesHeight, '#' + shade, 'white', '#' + shade);
+    });
+    
+       // Increase SVG height to accommodate the new rectangle
+const svgHeight = parseInt(svg.getAttribute('height'));
+svg.setAttribute('height', svgHeight + rectHeight + 'px');
+
+// Manually create and add the rectangle
+const rect = document.createElementNS(svgNS, 'rect');
+rect.setAttribute('x', 0);
+rect.setAttribute('y', svgHeight);
+rect.setAttribute('width', 2000);
+rect.setAttribute('height', rectHeight);
+rect.setAttribute('fill', '#ffffff');
+svg.appendChild(rect);
+
+// Manually create and add the text element with a larger font size
+const textElement = document.createElementNS(svgNS, 'text');
+textElement.setAttribute('x', 1000); // Center horizontally
+textElement.setAttribute('y', svgHeight + rectHeight / 2); // Vertically center in the rectangle
+textElement.setAttribute('text-anchor', 'middle');
+textElement.setAttribute('alignment-baseline', 'middle');
+textElement.setAttribute('fill', '#000000');
+textElement.setAttribute('font-family', 'Lexend');
+textElement.setAttribute('font-weight', 'bold');
+textElement.setAttribute('font-size', '40px'); // Increased font size
+textElement.textContent = 'Colors of the Day: ' + selectedDate + ' With <3 from Design Crony';
+svg.appendChild(textElement);
+
+    // Convert SVG to data URL and initiate download
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const image = 'data:image/svg+xml;base64,' + btoa(svgData);
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = image;
+    downloadLink.download = 'TodaysColors-' + selectedDate + '.svg';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
