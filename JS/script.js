@@ -172,7 +172,7 @@ function changeDate(date) {
     let colors = getColorsForDate(date);
     if (!colors) {
         // Randomly select a color harmony
-        const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 6); // Generate a number between 0 and 5 for harmony selection
+        const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 3); // Generate a number between 0 and 2
         switch (harmonySelector) {
             case 0:
                 colors = generateOppositeColorsForDate(date);
@@ -196,18 +196,8 @@ function changeDate(date) {
         storeColorsForDate(date, colors);
     }
     displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
-
-    // Hide or show the countdown based on the selected date, without causing layout shifts
-    const today = new Date().toISOString().split('T')[0];
-    const countdownElement = document.getElementById('countdown');
-    if (date !== today) {
-        countdownElement.style.visibility = 'hidden'; // Hide the countdown visually but preserve its space
-    } else {
-        countdownElement.style.visibility = 'visible'; // Show the countdown
-        startCountdown(); // Optionally restart the countdown
-    }
+    adjustCountdownVisibility(date);
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // Adjust to use local date components
@@ -502,3 +492,65 @@ function startCountdown() {
 
 // Call this function when the page is loaded or when you want the countdown to start
 document.addEventListener('DOMContentLoaded', startCountdown);
+function updateCountdown() {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const msLeft = tomorrow - now; // Milliseconds until midnight
+
+    const hours = Math.floor(msLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((msLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((msLeft % (1000 * 60)) / 1000);
+
+    document.getElementById('countdown').textContent = `Time left: ${hours}h ${minutes}m ${seconds}s`;
+
+    // Check if it's time to update to a new day
+    if (msLeft <= 1000) {
+        clearInterval(countdownInterval); // Stop the countdown
+        // Recalculate the date to ensure it's the next day
+        const nextDay = new Date();
+        nextDay.setDate(now.getDate() + 1); // Increment the day
+        const localDateStr = nextDay.getFullYear() + '-' + (nextDay.getMonth() + 1).toString().padStart(2, '0') + '-' + nextDay.getDate().toString().padStart(2, '0');
+        changeDate(localDateStr); // Update colors for the new day
+    }
+}
+// Function to show or hide the countdown based on the selected date
+function adjustCountdownVisibility(selectedDate) {
+    const today = new Date();
+    const currentDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+
+    // Get the countdown element
+    const countdownElement = document.getElementById('countdown');
+
+    if (selectedDate === currentDateStr) {
+        // Show countdown without affecting layout
+        countdownElement.style.visibility = ''; // or `countdownElement.style.opacity = 1;` for opacity approach
+        countdownElement.style.opacity = 1; // Make sure to reset opacity if you're using the opacity approach
+    } else {
+        // Hide countdown but keep its space in the layout
+        countdownElement.style.visibility = 'hidden'; // or `countdownElement.style.opacity = 0;` for opacity approach
+        // Optionally, transition the opacity change for a smoother effect
+        countdownElement.style.transition = 'opacity 0.5s';
+    }
+}
+
+
+// Adjust the initialization code for the date picker
+document.addEventListener('DOMContentLoaded', () => {
+    // Existing initialization code
+
+    // Date picker change event listener
+    document.getElementById('datePicker').addEventListener('change', function() {
+        const selectedDate = this.value;
+        changeDate(selectedDate); // Update the application based on the selected date
+        adjustCountdownVisibility(selectedDate); // Show or hide the countdown based on the selected date
+    });
+
+    // Additional initialization code as needed
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date();
+    const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+    
+    // Set the initial visibility of the countdown based on the current date
+    adjustCountdownVisibility(localDateStr);
+});
