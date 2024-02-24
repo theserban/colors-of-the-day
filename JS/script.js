@@ -256,9 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
      document.querySelector("#datePicker").setAttribute("autocomplete", "nope");
 });
 
-// Parse an input string, looking for any number of hexadecimal color
-// values, possibly with whitespace or garbage in between.  Return an array of
-// color values. Supports hex shorthand.
 function parseColorValues(colorValues) {
     var colorValuesArray = colorValues.match(/\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g);
     if (colorValuesArray) {
@@ -354,7 +351,7 @@ function parseColorValues(colorValues) {
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('width', '2000');
-    svg.setAttribute('height', '1600'); // Adjusted height to fit the color rectangles
+    svg.setAttribute('height', '1600'); 
 
     const primaryHex = document.getElementById('primaryHex').textContent;
     const secondaryHex = document.getElementById('secondaryHex').textContent;
@@ -384,20 +381,16 @@ function parseColorValues(colorValues) {
     }
 
     // Adjusted dimensions and positions
-    const columnWidth = 1000; // Full width for each color's column
+    const columnWidth = 1000; 
     const rectWidth = columnWidth / 2;
-    const rectHeight = (1600 / 10); // This makes the height equal to a tint or shade rectangle
-    const tintsAndShadesHeight = (1600 - rectHeight) / 10; // Allocate remaining height for tints and shades
+    const rectHeight = (1600 / 10); //
+    const tintsAndShadesHeight = (1600 - rectHeight) / 10;
 
-    // Draw primary color bar at the top with dynamic text color based on contrast
+    // Draw primary color rectangle
     drawRectWithText(0, 0, 1000, rectHeight, primaryHex, setTextContrast(primaryHex), primaryHex);
 
-    // Draw secondary color rectangle next to the primary, also with dynamic text color
+    // Draw secondary color rectangle 
     drawRectWithText(1000, 0, 1000, rectHeight, secondaryHex, setTextContrast(secondaryHex), secondaryHex);
-
-
-    // Adjusted function to calculate tints and shades
-    // Assuming calculateTints and calculateShades functions are defined elsewhere
 
     // Draw primary color tints and shades
     const primaryTints = calculateTints(primaryHex.substr(1));
@@ -421,7 +414,6 @@ function parseColorValues(colorValues) {
         drawRectWithText(columnWidth + rectWidth, rectHeight + index * tintsAndShadesHeight, rectWidth, tintsAndShadesHeight, '#' + shade, 'white', '#' + shade);
     });
     
-       // Increase SVG height to accommodate the new rectangle
 const svgHeight = parseInt(svg.getAttribute('height'));
 svg.setAttribute('height', svgHeight + rectHeight + 'px');
 
@@ -450,26 +442,26 @@ svg.appendChild(textElement);
 // Parse the selectedDate string into a Date object
 const dateObj = new Date(selectedDate);
 
-// Format the date. Here's a simple example using toLocaleDateString
-// You can customize the 'en-US' locale and options as needed
+
 const formattedDate = dateObj.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
 });
 
-// Now set the text content with the formatted date and your custom text
+
 textElement.textContent = `Colors of the Day: ${formattedDate} With <3 from Design Crony`;
 
 
-    // Convert SVG to data URL and initiate download
-    const svgData = new XMLSerializer().serializeToString(svg);
-    const image = 'data:image/svg+xml;base64,' + btoa(svgData);
+const svgData = new XMLSerializer().serializeToString(svg);
+const image = 'data:image/svg+xml;base64,' + btoa(svgData);
 
-    const downloadLink = document.createElement('a');
-    downloadLink.href = image;
-    downloadLink.download = 'TodaysColors-' + selectedDate + '.svg';
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+const downloadLink = document.createElement('a');
+downloadLink.href = image;
+
+const safeFormattedDate = formattedDate.replace(/ /g, '');
+downloadLink.download = `ColorsoftheDay,${safeFormattedDate}.svg`; // Use backticks for template literals
+document.body.appendChild(downloadLink);
+downloadLink.click();
+document.body.removeChild(downloadLink);
 }
