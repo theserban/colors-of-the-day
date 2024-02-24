@@ -172,7 +172,7 @@ function changeDate(date) {
     let colors = getColorsForDate(date);
     if (!colors) {
         // Randomly select a color harmony
-        const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 3); // Generate a number between 0 and 2
+        const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 6); // Generate a number between 0 and 5 for harmony selection
         switch (harmonySelector) {
             case 0:
                 colors = generateOppositeColorsForDate(date);
@@ -196,7 +196,18 @@ function changeDate(date) {
         storeColorsForDate(date, colors);
     }
     displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
+
+    // Hide or show the countdown based on the selected date, without causing layout shifts
+    const today = new Date().toISOString().split('T')[0];
+    const countdownElement = document.getElementById('countdown');
+    if (date !== today) {
+        countdownElement.style.visibility = 'hidden'; // Hide the countdown visually but preserve its space
+    } else {
+        countdownElement.style.visibility = 'visible'; // Show the countdown
+        startCountdown(); // Optionally restart the countdown
+    }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Adjust to use local date components
@@ -469,30 +480,25 @@ document.body.removeChild(downloadLink);
 function startCountdown() {
     function updateCountdown() {
         const now = new Date();
-        const tomorrow = new Date(now);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0); // Set to midnight
-
+        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
         const msLeft = tomorrow - now; // Milliseconds until midnight
+
         const hours = Math.floor(msLeft / (1000 * 60 * 60));
         const minutes = Math.floor((msLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((msLeft % (1000 * 60)) / 1000);
 
         document.getElementById('countdown').textContent = `Time left: ${hours}h ${minutes}m ${seconds}s`;
 
+        // Reset countdown at midnight (when there's no time left until tomorrow)
         if (msLeft <= 1000) {
             clearInterval(countdownInterval); // Stop the countdown
-            const today = new Date();
-            const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
-            changeDate(localDateStr); // Update colors for the new day
+            changeDate(tomorrow.toISOString().split('T')[0]); // Update colors for the new day
         }
     }
 
-    updateCountdown(); // Run once immediately
-    const countdownInterval = setInterval(updateCountdown, 1000); // Then every second
+    const countdownInterval = setInterval(updateCountdown, 1000); // Update countdown every second
+    updateCountdown(); // Initialize countdown immediately
 }
 
-// Initialize countdown on page load
-document.addEventListener('DOMContentLoaded', () => {
-    startCountdown();
-});
+// Call this function when the page is loaded or when you want the countdown to start
+document.addEventListener('DOMContentLoaded', startCountdown);
