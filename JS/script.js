@@ -447,6 +447,21 @@ textElement.setAttribute('font-size', '40px'); // Increased font size
 textElement.textContent = 'Colors of the Day: ' + selectedDate + ' With <3 from Design Crony';
 svg.appendChild(textElement);
 
+// Parse the selectedDate string into a Date object
+const dateObj = new Date(selectedDate);
+
+// Format the date. Here's a simple example using toLocaleDateString
+// You can customize the 'en-US' locale and options as needed
+const formattedDate = dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+
+// Now set the text content with the formatted date and your custom text
+textElement.textContent = `Colors of the Day: ${formattedDate} With <3 from Design Crony`;
+
+
     // Convert SVG to data URL and initiate download
     const svgData = new XMLSerializer().serializeToString(svg);
     const image = 'data:image/svg+xml;base64,' + btoa(svgData);
