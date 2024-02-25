@@ -38,6 +38,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 90vh;
+    padding: 0;
     margin: 0;
     background-color: var(--background-color);
     color: var(--text-color);
@@ -60,8 +61,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
-    max-width: 420px;
 }
 
 .colorBox {
@@ -145,7 +144,7 @@ body {
 }
 
 .logo {
-  text-align: center;
+  text-align: center !important;
 } 
 
 .logo img {
