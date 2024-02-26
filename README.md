@@ -4,7 +4,7 @@
 
 Colors of the Day is your daily dose of creativity! Brought to you by Design Crony, this cool app throws you a fun challenge: every day, it unlocks two new colors. Dive into your design tools, use these colors in your creations, and share your masterpieces on Instagram with #upforcolors. It's fun, it's fresh, and it's all about pushing your creative boundaries!
 
-<img width="785" alt="Screenshot 2024-02-25 at 14 32 34" src="https://github.com/theserban/colors-of-the-day/assets/134176220/2bf6302a-ecdc-4e97-bf06-70e25d5a0875">
+<img width="2532" alt="git" src="https://github.com/theserban/colors-of-the-day/assets/134176220/9db17ee8-39e4-43e9-b518-12ed8e013404">
 
 <h2>What sets this tool apart?</h2>
 It's not just another color generator. It's a creative challenge that keeps you on your toes! Every day brings new colors and a new opportunity to explore your creativity. Colors of the Day offers a fun, interactive way to explore and incorporate unique color combinations directly into your designs. Inspired by Pantone's Color of the Year—yet with our playful twist—this app keeps your creativity flowing all year round.
