@@ -237,23 +237,19 @@ function copyToClipboard(hexId, colorContext) {
 }
 
 function adjustAlertPosition() {
-    // Get the countdown and alert container elements
     const countdownElement = document.getElementById('countdown');
     const customAlertContainer = document.getElementById('customAlert'); // Ensure this exists
     const shareAlertContainer = document.getElementById('shareAlert'); // Ensure this exists too
     
     // Check if the countdown is visible
     if (countdownElement.style.visibility === 'hidden' || countdownElement.style.display === 'none') {
-        // Adjust the alert containers' top position when countdown is not visible
         customAlertContainer.style.top = '74%'; // or any other value you prefer when countdown is hidden
         shareAlertContainer.style.top = '74%'; // Apply the same adjustment to the share alert
     } else {
-        // Reset the top position when countdown is visible
         customAlertContainer.style.top = '79%'; // Reset to default or specify a different value
         shareAlertContainer.style.top = '79%'; // Reset for the share alert as well
     }
 }
-
 
 
 function startCountdown() {
@@ -590,7 +586,6 @@ setTimeout(() => {
     
     // Example of dynamically setting the alert style based on primary color
     const primaryColor = document.getElementById('primaryHex').textContent;
-    alertBox.style.backgroundColor = primaryColor; // Set background color to primary color
     alertBox.style.color = '#FFFFFF'; // Set text color to white for contrast
     alertBox.style.display = 'block';
 
@@ -599,7 +594,6 @@ setTimeout(() => {
         alertBox.style.display = 'none';
     }, 2000);
 
-    // Optional: Adjust alert position based on other UI elements
-    adjustAlertPosition(); // You would need to implement or adapt this function based on your UI requirements
+    adjustAlertPosition();
 });
 }
