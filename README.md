@@ -4,7 +4,7 @@
 
 Colors of the Day is your daily dose of creativity! Brought to you by Design Crony, this cool app throws you a fun challenge: every day, it unlocks two new colors. Dive into your design tools, use these colors in your creations, and share your masterpieces on Instagram with #upforcolors. It's fun, it's fresh, and it's all about pushing your creative boundaries!
 
-<img width="487" alt="Screenshot 2024-02-23 at 23 28 22" src="https://github.com/theserban/colors-of-the-day/assets/134176220/b9506f49-9b06-4682-8814-c2a3e571a43d">
+<img width="2532" alt="git" src="https://github.com/theserban/colors-of-the-day/assets/134176220/9db17ee8-39e4-43e9-b518-12ed8e013404">
 
 <h2>What sets this tool apart?</h2>
 It's not just another color generator. It's a creative challenge that keeps you on your toes! Every day brings new colors and a new opportunity to explore your creativity. Colors of the Day offers a fun, interactive way to explore and incorporate unique color combinations directly into your designs. Inspired by Pantone's Color of the Year—yet with our playful twist—this app keeps your creativity flowing all year round.
@@ -25,6 +25,8 @@ Spotted a glitch or dreaming of a new feature? Pop over to our GitHub and drop u
 - Font: <a href="lexend.com">Lexend</a> by <a href="https://www.linkedin.com/in/bonnie-shaver-troup-edd-b3386816/">Bonnie Shaver-Troup</a>
 
 - Calendar: <a href="https://flatpickr.js.org/">Flat Pickr</a> by <a href="https://github.com/chmln/">Gregory Chmln</a>
+
+- Color Calculations: <a href="https://maketintsandshades.com/">Tints and Shades Generator</a> by <a href="https://michaeledelstone.com/">Michael Edelstone</a>
 
 - Projects: Creative Hub <a href="designcrony.com">Design Crony</a>, Agency <a href="blureo.com">Blureo</a> 
 
