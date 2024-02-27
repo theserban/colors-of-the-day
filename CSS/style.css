@@ -150,7 +150,6 @@ a:hover {
   transform: translateX(-50%);
   padding: 0.9375em;
   border-radius: 0.625em;
-  text-align: center;
 }
 
 
@@ -161,7 +160,6 @@ a:hover {
   transform: translateX(-50%);
   padding: 0.9375em;
   border-radius: 0.625em;
-  text-align: center;
   background-color: var(--colors-switch);
 }
 
