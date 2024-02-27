@@ -243,11 +243,11 @@ function adjustAlertPosition() {
     
     // Check if the countdown is visible
     if (countdownElement.style.visibility === 'hidden' || countdownElement.style.display === 'none') {
-        customAlertContainer.style.top = '74%'; // or any other value you prefer when countdown is hidden
-        shareAlertContainer.style.top = '74%'; // Apply the same adjustment to the share alert
+        customAlertContainer.style.top = '90%'; // or any other value you prefer when countdown is hidden
+        shareAlertContainer.style.top = '90%'; // Apply the same adjustment to the share alert
     } else {
-        customAlertContainer.style.top = '79%'; // Reset to default or specify a different value
-        shareAlertContainer.style.top = '79%'; // Reset for the share alert as well
+        customAlertContainer.style.top = '90%'; // Reset to default or specify a different value
+        shareAlertContainer.style.top = '90%'; // Reset for the share alert as well
     }
 }
 
