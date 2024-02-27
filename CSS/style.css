@@ -6,8 +6,8 @@
   --text-days: #898989;
   --text-days-future: #c2c2c2;
   --container-bg-color: #fff;
-  --button-bg-color: #f0f0f0;
-  --button-hover-bg-color: #e0e0e0;
+  --button-bg-color: #ebebeb;
+  --button-hover-bg-color: #cfcfcf;
   --colors-switch: var(--primary-color);
 }
 
@@ -19,18 +19,18 @@
   --text-days: #c2c2c2;
   --text-days-future: #8a8a8a;
   --container-bg-color: #363636;
-  --button-bg-color: #777;
+  --button-bg-color: #666;
   --calendar-bg-color: #333;
   --button-hover-bg-color: #666;
-  --input-bg-color: #555; /* Darker for inputs */
+  --input-bg-color: #555;
   --input-text-color: #fff; 
   --input-border-color: #666; 
   --colors-switch: var(--secondary-color);
 }
 
 [data-theme="dark"] .logo img {
-  filter: invert(100%); /* Invert colors for dark theme */
-  }
+  filter: invert(100%);
+}
 
 body {
     font-family: 'Lexend', sans-serif;
@@ -50,24 +50,23 @@ body {
   position: absolute; 
   top: 0; border: 0; right: 0; 
   aria-hidden="true";
-  }
-  
+}
 
 #appContainer {
     background-color: var(--container-bg-color);
-    padding: 30px 30px 10px;
-    border-radius: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.875em 1.875em 0.625em;
+    border-radius: 2.5em;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .colorBox {
-    width: 140px;
-    height: 120px;
-    border-radius: 15px;
-    margin: 10px;
+    width: 8.75em;
+    height: 7.5em;
+    border-radius: 0.9375em;
+    margin: 0.625em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,18 +86,18 @@ body {
 
 .colorTitle {
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 0.5em;
 }
 
 .copyButton {
     background-color: var(--button-bg-color);
     color: var(--text-color);
     border: none;
-    border-radius: 6px;
-    padding: 5px 10px;
-    margin-top: 12px;
+    border-radius: 0.375em;
+    padding: 0.3125em 0.625em;
+    margin-top: 0.75em;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
     font-family: 'Lexend', sans-serif;
 }
 
@@ -111,13 +110,13 @@ body {
   background-color: var(--button-bg-color);
   color: var(--text-color);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  margin-top: 20px;
+  border-radius: 0.5em;
+  padding: 0.625em 1.25em;
+  margin-top: 1.25em;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
   font-family: 'Lexend', sans-serif;
-  margin-bottom: 30px;
+  margin-bottom: 1.875em;
   font-size: 1em;
 }
 
@@ -130,7 +129,7 @@ body {
     font-size: 1em;
     text-align: center;
     margin: 0;
-    padding: 6px;
+    padding: 0.375em;
     line-height: 1.5;
 }
 
@@ -147,31 +146,28 @@ a:hover {
 #customAlert {
   display: none;
   position: fixed;
-  top: 82%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 10px;
-  border-radius: 5px;
+  transform: translateX(-50%);
+  padding: 0.9375em;
+  border-radius: 0.625em;
   text-align: center;
 }
+
 
 #shareAlert {
   display: none;
   position: fixed;
-  top: 82%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--container-bg-color);
-  padding: 10px;
-  border-radius: 5px;
+  transform: translateX(-50%);
+  padding: 0.9375em;
+  border-radius: 0.625em;
   text-align: center;
 }
-
 
 #colorsContainer {
     display: flex;
     justify-content: center;
-    margin-top: 4px;
+    margin-top: 0.25em;
 }
 
 .logo {
@@ -182,29 +178,26 @@ a:hover {
 filter: none; 
 }
 
-/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
-  width: 40px; /* Smaller width */
-  height: 24px; /* Smaller height */
+  width: 2.5em; 
+  height: 1.5em;
 }
 
-/* Hide default checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Hide default checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -213,19 +206,19 @@ filter: none;
   right: 0;
   bottom: 0;
   background-color: var(--primary-color);
-  transition: .4s;
-  border-radius: 24px; /* Adjust for rounded corners */
+  transition: 0.4s;
+  border-radius: 1.5em; 
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 18px; /* Adjusted for smaller slider */
-  width: 18px; /* Adjusted for smaller slider */
-  left: 3px; /* Adjusted for smaller slider */
-  bottom: 3px; /* Adjusted for smaller slider */
+  height: 1.125em; 
+  width: 1.125em; 
+  left: 0.1875em; 
+  bottom: 0.1875em; 
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
@@ -234,19 +227,24 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(16px); /* Adjusted for smaller slider */
+  transform: translateX(1em); 
 }
+
 @media (max-width: 768px) {
   #appContainer {
       background-color: transparent; /* Make background transparent */
       box-shadow: none; /* Remove shadow */
       border: none; /* Remove borders, if any */
       width: auto;
+      padding-bottom: 0em;
   }
   body {
     background-color: var(--container-bg-color);
     br {
       display: none; 
+    }
+    .shareButton {
+      margin-bottom: 1.875em;
     }
 }
 .github-logo{
@@ -264,8 +262,8 @@ input:checked + .slider:before {
 }
 
 #countdownContainer {
-  padding: 10px;
-  margin-top: 10px;
+  padding: 0.625em;
+  margin-top: 0.625em;
   text-align: center;
   font-size: 1em;
 }
