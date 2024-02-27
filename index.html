@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colors of the Day by Design Crony</title>
+    <meta property="og:title" content="Colors of the day"/>
+    <meta property="og:description" content="A Fun challenge"/>
+    <meta property="og:image" content="https://colors.designcrony.com/Images/OGImage.php"/>
+    <meta property="og:url" content="https://colors.designcrony.com"/>
     <link href="/Fonts/Lexend.ttf" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet"  type="text/css" href="CSS/style.css">
@@ -27,7 +31,7 @@
 
             <div class="title"><h2>Colors of the Day</h2></div>
         <p id="currentDate" hidden></p>
-        <p class="description">Challenge! Use today's colors in your design.<br>Tag <span class="highlight-color"><b>#upforcolors</b></span> in your Instagram post.</p>
+        <p class="description">Challenge! Use today's colors in your design. <br>Tag #upforcolors on <a href="https://www.instagram.com/explore/tags/upforcolors/">Instagram</a>, <a href="https://discord.gg/AHDfnppM2N">Discord.</a></p>
         <form autocomplete="off" method="post" action="">
         <input autocomplete="false" name="hidden" id="datePicker" onchange="changeDate(this.value)">
         </form> 
@@ -36,14 +40,14 @@
                 <div class="colorContent">
                     <span class="colorTitle">Primary</span>
                     <span id="primaryHex">#3027CE</span>
-                    <button class="copyButton" onclick="copyToClipboard('#primaryHex')">Copy</button>
+                    <button class="copyButton" onclick="copyToClipboard('#primaryHex', 'primaryColor')">Copy</button>
                 </div>
             </div>
             <div class="colorBox" id="secondaryColor">
                 <div class="colorContent">
                     <span class="colorTitle">Secondary</span>
                     <span id="secondaryHex">#DFDCFF</span>
-                    <button class="copyButton" onclick="copyToClipboard('#secondaryHex')">Copy</button>
+                    <button class="copyButton" onclick="copyToClipboard('#secondaryHex', 'secondaryColor')">Copy</button>
                 </div>
             </div>  
            </div>
@@ -52,7 +56,12 @@
     <div id="countdownContainer">
         <p id="countdown"></p>
     </div>
+    <div id="customAlert">
+        <b>Copied!</b>
+        </div>
+        <div id="shareAlert">
+            <b>Downloaded!</b>
+        </div>
 </div>
-
 </body>
 </html>

@@ -4,7 +4,22 @@ function setTextContrast(color) {
     const g = parseInt(hex.substr(2, 2), 16);
     const b = parseInt(hex.substr(4, 2), 16);
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness > 155 ? '#000' : '#FFF'; // Adjust threshold as needed
+    return brightness > 155 ? '#363636' : '#FFF'; // Adjust threshold as needed
+}
+
+function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
+    const primaryColorBox = document.getElementById('primaryColor');
+    const secondaryColorBox = document.getElementById('secondaryColor');
+    primaryColorBox.style.backgroundColor = primaryColor;
+    secondaryColorBox.style.backgroundColor = secondaryColor;
+    document.getElementById('primaryHex').textContent = primaryHex;
+    document.getElementById('secondaryHex').textContent = secondaryHex;
+    primaryColorBox.style.color = setTextContrast(primaryHex);
+    secondaryColorBox.style.color = setTextContrast(secondaryHex);
+
+    // Set the primary color as a CSS variable
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
 }
 
 function generateSeed(date) {
@@ -128,8 +143,6 @@ function generateSquareColorsForDate(date) {
     };
 }
 
-
-
 function HSLToHex(h, s, l) {
     l /= 100;
     const a = s * Math.min(l, 1 - l) / 100;
@@ -140,24 +153,6 @@ function HSLToHex(h, s, l) {
     };
     return `#${f(0)}${f(8)}${f(4)}`;
 }
-
-
-
-function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
-    const primaryColorBox = document.getElementById('primaryColor');
-    const secondaryColorBox = document.getElementById('secondaryColor');
-    primaryColorBox.style.backgroundColor = primaryColor;
-    secondaryColorBox.style.backgroundColor = secondaryColor;
-    document.getElementById('primaryHex').textContent = primaryHex;
-    document.getElementById('secondaryHex').textContent = secondaryHex;
-    primaryColorBox.style.color = setTextContrast(primaryHex);
-    secondaryColorBox.style.color = setTextContrast(secondaryHex);
-
-    // Set the primary color as a CSS variable
-    document.documentElement.style.setProperty('--primary-color', primaryColor);
-    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-}
-
 
 function storeColorsForDate(date, colors) {
     localStorage.setItem(date, JSON.stringify(colors));
@@ -220,10 +215,23 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.addEventListener('click', toggleTheme);
 });
 
-function copyToClipboard(hexId) {
+function copyToClipboard(hexId, colorContext) {
     const hexCode = document.querySelector(hexId).textContent;
     navigator.clipboard.writeText(hexCode).then(() => {
-        
+        // Select the custom alert element
+        const alertBox = document.getElementById('customAlert');
+        // Get the color based on the color context
+        const color = document.getElementById(colorContext).style.backgroundColor;
+        // Set the custom alert's background color using CSS variables
+        alertBox.style.backgroundColor = `var(--container-bg-color, ${color})`;
+        // Show the custom alert
+        alertBox.style.display = 'block';
+
+        alertBox.style.color = `var(--text-color, ${colorContext === 'primaryColor' ? '#ffffff' : '#ffffff'})`; // Example condition
+
+        setTimeout(() => {
+            alertBox.style.display = 'none';
+        }, 2000);
     });
 }
 
@@ -465,6 +473,16 @@ downloadLink.download = `ColorsoftheDay,${safeFormattedDate}.svg`; // Use backti
 document.body.appendChild(downloadLink);
 downloadLink.click();
 document.body.removeChild(downloadLink);
+setTimeout(() => {
+    // Select the custom alert element
+    const alertBox = document.getElementById('shareAlert');
+    // Show the custom alert
+    alertBox.style.display = 'block';
+    // Hide the custom alert after 2 seconds
+    setTimeout(() => {
+        alertBox.style.display = 'none';
+    }, 2000);
+});
 }
 
 function startCountdown() {
