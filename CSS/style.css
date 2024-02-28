@@ -23,8 +23,8 @@
   --calendar-bg-color: #333;
   --button-hover-bg-color: #666;
   --input-bg-color: #555;
-  --input-text-color: #fff; 
-  --input-border-color: #666; 
+  --input-text-color: #fff;
+  --input-border-color: #666;
   --colors-switch: var(--secondary-color);
 }
 
@@ -33,77 +33,79 @@
 }
 
 body {
-    font-family: 'Lexend', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    padding: 0;
-    margin: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
+  font-family: 'Lexend', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  padding: 0;
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-.github-logo{
-  fill:var(--container-bg-color); 
-  color:var(--text-color); 
-  position: absolute; 
-  top: 0; border: 0; right: 0; 
+.github-logo {
+  fill: var(--container-bg-color);
+  color: var(--text-color);
+  position: absolute;
+  top: 0;
+  border: 0;
+  right: 0;
   aria-hidden="true";
 }
 
 #appContainer {
-    background-color: var(--container-bg-color);
-    padding: 1.875em 1.875em 0.625em;
-    border-radius: 2.5em;
-    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: var(--container-bg-color);
+  padding: 1.875em 1.875em 0.625em;
+  border-radius: 2.5em;
+  box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .colorBox {
-    width: 8.75em;
-    height: 7.5em;
-    border-radius: 0.9375em;
-    margin: 0.625em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+  width: 8.75em;
+  height: 7.5em;
+  border-radius: 0.9375em;
+  margin: 0.625em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
 }
 
 .colorInfo {
-    text-align: center;
+  text-align: center;
 }
 
 .colorContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .colorTitle {
-    font-weight: bold;
-    margin-bottom: 0.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
 }
 
 .copyButton {
-    background-color: var(--button-bg-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.375em;
-    padding: 0.3125em 0.625em;
-    margin-top: 0.75em;
-    cursor: pointer;
-    box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
-    font-family: 'Lexend', sans-serif;
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.375em;
+  padding: 0.3125em 0.625em;
+  margin-top: 0.75em;
+  cursor: pointer;
+  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
+  font-family: 'Lexend', sans-serif;
 }
 
 .copyButton:hover {
-    background-color: var(--button-hover-bg-color);
-    color: var(--text-color);
+  background-color: var(--button-hover-bg-color);
+  color: var(--text-color);
 }
 
 .shareButton:hover {
@@ -112,16 +114,16 @@ body {
 }
 
 .description {
-    font-size: 1em;
-    text-align: center;
-    margin: 0;
-    padding: 0.375em;
-    line-height: 1.5;
+  font-size: 1em;
+  text-align: center;
+  margin: 0;
+  padding: 0.375em;
+  line-height: 1.5;
 }
 
 a {
-  color: var(--text-color); 
-  text-decoration: none; 
+  color: var(--text-color);
+  text-decoration: none;
   border-bottom: 0.07em solid var(--colors-switch);
 }
 
@@ -142,7 +144,7 @@ a:hover {
 #shareAlert {
   display: none;
   position: fixed;
-  left: 50%;  
+  left: 50%;
   transform: translateX(-50%);
   padding: 0.9375em;
   border-radius: 0.625em;
@@ -150,23 +152,23 @@ a:hover {
 }
 
 #colorsContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.25em;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.25em;
 }
 
 .logo {
   text-align: center !important;
-} 
+}
 
 .logo img {
-filter: none; 
+  filter: none;
 }
 
 .switch {
   position: relative;
   display: inline-block;
-  width: 2.5em; 
+  width: 2.5em;
   height: 1.5em;
 }
 
@@ -192,27 +194,27 @@ filter: none;
   bottom: 0;
   background-color: var(--primary-color);
   transition: 0.4s;
-  border-radius: 1.5em; 
+  border-radius: 1.5em;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 1.125em; 
-  width: 1.125em; 
-  left: 0.1875em; 
-  bottom: 0.1875em; 
+  height: 1.125em;
+  width: 1.125em;
+  left: 0.1875em;
+  bottom: 0.1875em;
   background-color: white;
   transition: 0.4s;
   border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--secondary-color);
 }
 
-input:checked + .slider:before {
-  transform: translateX(1em); 
+input:checked+.slider:before {
+  transform: translateX(1em);
 }
 
 .shareButton {
@@ -229,53 +231,65 @@ input:checked + .slider:before {
   font-size: 1em;
 }
 
+#countdownContainer {
+  padding: 0.625em;
+  text-align: center;
+  font-size: 1em;
+}
+
+#countdown {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
 
 @media (max-width: 768px) {
   #appContainer {
-      background-color: transparent; /* Make background transparent */
-      box-shadow: none; /* Remove shadow */
-      border: none; /* Remove borders, if any */
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
       width: auto;
       padding-bottom: 0em;
   }
+
   body {
-    background-color: var(--container-bg-color);
-    br {
-      display: none; 
-    }
-    .shareButton {
-      margin-bottom: 1.875em;
-    } 
-}
+      background-color: var(--container-bg-color);
 
-#customAlert {
-  margin-top: 2em;
-}
+      br {
+          display: none;
+      }
 
+      .shareButton {
+          margin-bottom: 1.875em;
+      }
 
-#shareAlert {
-  margin-top: 2em;
-}
+      #countdownContainer {
+          padding: 0em;
+          text-align: center;
+          margin-top: 0em;
+          margin-bottom: 0em;
+      }
 
-.github-logo{
-  fill:var(--background-color);
-  color:var(--text-color); 
-  position: absolute; 
-  top: 0; border: 0; right: 0; 
-  aria-hidden="true";
+      #countdown {
+          margin-top: 0.25em;
+          margin-bottom: 0em;
+      }
+
+      #customAlert {
+          margin-top: 2em;
+      }
+
+      #shareAlert {
+          margin-top: 2em;
+      }
+
+      .github-logo {
+          fill: var(--background-color);
+          color: var(--text-color);
+          position: absolute;
+          top: 0;
+          border: 0;
+          right: 0;
+          aria-hidden="true";
+      }
   }
-  
-  #countdownContainer {
-    padding: 0em;
-    margin-top: 0em;
-    text-align: center;
-    font-size: 1em;
-  }
-}
-
-#countdownContainer {
-  padding: 0.625em;
-  margin-top: 0.625em;
-  text-align: center;
-  font-size: 1em;
 }
