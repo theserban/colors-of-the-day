@@ -242,7 +242,7 @@ input:checked+.slider:before {
   margin-bottom: 1.25em;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   #appContainer {
       background-color: transparent;
       box-shadow: none;
@@ -251,8 +251,14 @@ input:checked+.slider:before {
       padding-bottom: 0em;
   }
 
-  body {
+      body {
       background-color: var(--container-bg-color);
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      height: auto;
+      padding-top: 20px;
+      }
 
       br {
           display: none;
@@ -291,5 +297,5 @@ input:checked+.slider:before {
           right: 0;
           aria-hidden="true";
       }
-  }
+  
 }
