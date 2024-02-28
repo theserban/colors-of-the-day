@@ -236,21 +236,6 @@ function copyToClipboard(hexId, colorContext) {
     });
 }
 
-function adjustAlertPosition() {
-    const countdownElement = document.getElementById('countdown');
-    const customAlertContainer = document.getElementById('customAlert'); // Ensure this exists
-    const shareAlertContainer = document.getElementById('shareAlert'); // Ensure this exists too
-    
-    // Check if the countdown is visible
-    if (countdownElement.style.visibility === 'hidden' || countdownElement.style.display === 'none') {
-        customAlertContainer.style.top = '90%'; // or any other value you prefer when countdown is hidden
-        shareAlertContainer.style.top = '90%'; // Apply the same adjustment to the share alert
-    } else {
-        customAlertContainer.style.top = '90%'; // Reset to default or specify a different value
-        shareAlertContainer.style.top = '90%'; // Reset for the share alert as well
-    }
-}
-
 
 function startCountdown() {
     function updateCountdown() {
@@ -315,8 +300,6 @@ function adjustCountdownVisibility(selectedDate) {
         countdownElement.style.transition = 'opacity 0.5s';
     }
 
-    // Adjust the position of the alert based on the countdown visibility
-    adjustAlertPosition();
 }
 
 
@@ -593,7 +576,5 @@ setTimeout(() => {
     setTimeout(() => {
         alertBox.style.display = 'none';
     }, 2000);
-
-    adjustAlertPosition();
 });
 }
