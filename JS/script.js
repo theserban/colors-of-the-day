@@ -1,10 +1,10 @@
 function setTextContrast(color) {
-	const hex = color.replace('#', '');
-	const r = parseInt(hex.substr(0, 2), 16);
-	const g = parseInt(hex.substr(2, 2), 16);
-	const b = parseInt(hex.substr(4, 2), 16);
-	const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-	return brightness > 155 ? '#363636' : '#FFF'; // Adjust threshold as needed
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 155 ? '#363636' : '#FFF'; // Adjust threshold as needed
 }
 
 function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
@@ -39,23 +39,19 @@ function pseudoRandom(seed) {
 
 
 function generateOppositeColorsForDate(date) {
-	const seed = generateSeed(date);
-	const baseHue = Math.floor(pseudoRandom(seed) * 360);
-	const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60; // Saturation between 60% and 100%
-	const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40; // Lightness between 40% and 60%
 
-	const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
-	const secondaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
-
-	const primaryHex = HSLToHex(baseHue, saturation, lightness);
-	const secondaryHex = HSLToHex((baseHue + 180) % 360, saturation, lightness);
-
-	return {
-		primaryColor,
-		secondaryColor,
-		primaryHex,
-		secondaryHex
-	};
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60; // Saturation between 60% and 100%
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40; // Lightness between 40% and 60%
+    
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
+    const secondaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
+    
+    const primaryHex = HSLToHex(baseHue, saturation, lightness);
+    const secondaryHex = HSLToHex((baseHue + 180) % 360, saturation, lightness);
+    
+    return { primaryColor, secondaryColor, primaryHex, secondaryHex };
 }
 
 // Analogous Harmony
@@ -197,28 +193,23 @@ function changeDate(date) {
 	}
 	displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
 	adjustCountdownVisibility(date);
-	adjustAlertPosition();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	// Adjust to use local date components
-	const today = new Date();
-	const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
-
-	document.getElementById('currentDate').textContent = today.toLocaleDateString();
-	document.getElementById('datePicker').max = localDateStr;
-	document.getElementById('datePicker').value = localDateStr;
-
-	changeDate(localDateStr); // Initialize with stored or new colors for today
-
-	const savedTheme = localStorage.getItem('theme') || 'light';
-	document.documentElement.setAttribute('data-theme', savedTheme);
-
-	// Ensure the switch reflects the current theme
-	const themeToggle = document.getElementById('themeToggle');
-	themeToggle.checked = savedTheme === 'dark';
-
-	themeToggle.addEventListener('click', toggleTheme);
+	    // Adjust to use local date components
+        const today = new Date();
+        const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+        
+        document.getElementById('currentDate').textContent = today.toLocaleDateString();
+        document.getElementById('datePicker').max = localDateStr;
+        document.getElementById('datePicker').value = localDateStr;
+        changeDate(localDateStr); // Initialize with stored or new colors for today
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Ensure the switch reflects the current theme
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.checked = savedTheme === 'dark';
+        themeToggle.addEventListener('click', toggleTheme);
 });
 
 function copyToClipboard(hexId, colorContext) {
