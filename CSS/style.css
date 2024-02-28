@@ -106,20 +106,6 @@ body {
     color: var(--text-color);
 }
 
-.shareButton {
-  background-color: var(--button-bg-color);
-  color: var(--text-color);
-  border: none;
-  border-radius: 0.5em;
-  padding: 0.625em 1.25em;
-  margin-top: 1.25em;
-  cursor: pointer;
-  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
-  font-family: 'Lexend', sans-serif;
-  margin-bottom: 1.875em;
-  font-size: 1em;
-}
-
 .shareButton:hover {
   background-color: var(--button-hover-bg-color);
   color: var(--text-color);
@@ -147,7 +133,6 @@ a:hover {
   display: none;
   position: fixed;
   left: 50%;
-  top: 90%;
   transform: translateX(-50%);
   padding: 0.9375em;
   border-radius: 0.625em;
@@ -157,8 +142,7 @@ a:hover {
 #shareAlert {
   display: none;
   position: fixed;
-  left: 50%;
-  top: 90%;
+  left: 50%;  
   transform: translateX(-50%);
   padding: 0.9375em;
   border-radius: 0.625em;
@@ -231,6 +215,21 @@ input:checked + .slider:before {
   transform: translateX(1em); 
 }
 
+.shareButton {
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.625em 1.25em;
+  margin-top: 1.25em;
+  cursor: pointer;
+  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
+  font-family: 'Lexend', sans-serif;
+  margin-bottom: 1.25em;
+  font-size: 1em;
+}
+
+
 @media (max-width: 768px) {
   #appContainer {
       background-color: transparent; /* Make background transparent */
@@ -246,18 +245,18 @@ input:checked + .slider:before {
     }
     .shareButton {
       margin-bottom: 1.875em;
-    }
-    #customAlert {
-      left: 50%;
-      top: 92%;
-    }
-    
-    
-    #shareAlert {
-      left: 50%;
-      top: 92%;
-    }
+    } 
 }
+
+#customAlert {
+  margin-top: 2em;
+}
+
+
+#shareAlert {
+  margin-top: 2em;
+}
+
 .github-logo{
   fill:var(--background-color);
   color:var(--text-color); 
@@ -267,6 +266,8 @@ input:checked + .slider:before {
   }
   
   #countdownContainer {
+    padding: 0em;
+    margin-top: 0em;
     text-align: center;
     font-size: 1em;
   }
