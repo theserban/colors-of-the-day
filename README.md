@@ -2,7 +2,7 @@
 
 <h2>What is it?</h2>
 
-Colors of the Day is your daily dose of creativity! Brought to you by Design Crony, this cool app throws you a fun challenge: every day, it unlocks two new colors. Dive into your design tools, use these colors in your creations, and share your masterpieces on Instagram with #upforcolors. It's fun, it's fresh, and it's all about pushing your creative boundaries!
+Colors of the Day is your daily dose of creativity! Brought to you by Design Crony, this cool app throws you a fun challenge: every day, it unlocks two new colors. Dive into your design tools, use these colors in your creations, and share your masterpieces on Reddit r/designcrony with #upforcolors. It's fun, it's fresh, and it's all about pushing your creative boundaries!
 
 <img width="2532" alt="git" src="https://github.com/theserban/colors-of-the-day/assets/134176220/9db17ee8-39e4-43e9-b518-12ed8e013404">
 
