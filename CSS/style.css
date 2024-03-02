@@ -7,7 +7,7 @@
   --text-days-future: #c2c2c2;
   --container-bg-color: #fff;
   --button-bg-color: #ebebeb;
-  --button-hover-bg-color: #cfcfcf;
+  --button-hover-bg-color: #e6e6e6;
   --colors-switch: var(--primary-color);
 }
 
@@ -21,7 +21,7 @@
   --container-bg-color: #363636;
   --button-bg-color: #666;
   --calendar-bg-color: #333;
-  --button-hover-bg-color: #666;
+  --button-hover-bg-color: #777;
   --input-bg-color: #555;
   --input-text-color: #fff;
   --input-border-color: #666;
@@ -107,6 +107,22 @@ body {
   background-color: var(--button-hover-bg-color);
   color: var(--text-color);
 }
+
+.shareButton {
+  margin-bottom: 1.875em;
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.625em 1.25em;
+  margin-top: 1.25em;
+  cursor: pointer;
+  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
+  font-family: 'Lexend', sans-serif;
+  margin-bottom: 1.25em;
+  font-size: 1em;
+}
+
 
 .shareButton:hover {
   background-color: var(--button-hover-bg-color);
@@ -217,20 +233,6 @@ input:checked+.slider:before {
   transform: translateX(1em);
 }
 
-.shareButton {
-  background-color: var(--button-bg-color);
-  color: var(--text-color);
-  border: none;
-  border-radius: 0.5em;
-  padding: 0.625em 1.25em;
-  margin-top: 1.25em;
-  cursor: pointer;
-  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
-  font-family: 'Lexend', sans-serif;
-  margin-bottom: 1.25em;
-  font-size: 1em;
-}
-
 #countdownContainer {
   padding: 0.625em;
   text-align: center;
@@ -262,10 +264,6 @@ input:checked+.slider:before {
 
       br {
           display: none;
-      }
-
-      .shareButton {
-          margin-bottom: 1.875em;
       }
 
       #countdownContainer {
