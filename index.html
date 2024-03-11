@@ -76,9 +76,8 @@
                 <h2>Colors of the Day</h2>
             </div>
             <p id="currentDate" hidden></p>
-            <p class="description">Challenge! Use today's colors in your design. <br>Tag #upforcolors on <a
-                    href="https://www.reddit.com/r/designcrony/">Reddit</a>, <a
-                    href="https://discord.gg/AHDfnppM2N">Discord.</a></p>
+            <p class="description">Challenge! Use today's colors in your design. <br>Tag #upforcolors on
+                    <a href="https://discord.gg/AHDfnppM2N">Discord.</a></p>
             <form autocomplete="off" method="post" action="">
                 <input autocomplete="false" name="hidden" id="datePicker" onchange="changeDate(this.value)">
             </form>
@@ -105,13 +104,12 @@
         <div id="countdownContainer">
             <p id="countdown"></p>
         </div>
-        <div id="customAlert">
-            <b>Copied!</b>
-        </div>
-        <div id="shareAlert">
-            <b>Downloaded!</b>
-        </div>
-
+        <div id="modalOverlay">
+            <div id="customAlert"></div>
+          </div>
+          <div id="modalOverlay2">
+            <div id="shareAlert"></div>
+          </div>
     </div>
 </body>
 

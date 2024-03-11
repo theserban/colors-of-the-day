@@ -121,24 +121,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function copyToClipboard(hexId, colorContext) {
-	const hexCode = document.querySelector(hexId).textContent;
+	const hexCode = document.querySelector(hexId).textContent.replace('#', '');
 	navigator.clipboard.writeText(hexCode).then(() => {
-		// Select the custom alert element
-		const alertBox = document.getElementById('customAlert');
-		// Get the color based on the color context
-		const color = document.getElementById(colorContext).style.backgroundColor;
-		// Set the custom alert's background color using CSS variables
-		alertBox.style.backgroundColor = `var(--bg-color, ${color})`;
-		// Set text color to white
-		alertBox.style.color = 'white';
-		// Show the custom alert
-		alertBox.style.display = 'block';
-
-		setTimeout(() => {
-			alertBox.style.display = 'none';
-		}, 2000);
+	  const alertBox = document.getElementById('customAlert');
+	  const modalOverlay = document.getElementById('modalOverlay');
+	  const color = document.getElementById(colorContext).style.backgroundColor;
+	  alertBox.style.backgroundColor = `var(--bg-color, ${color})`;
+	  alertBox.style.color = 'white';
+	  alertBox.innerHTML = '<b>Copied!</b>'; // Set the alert message
+	  alertBox.style.display = 'block';
+	  modalOverlay.style.display = 'flex'; // Show the overlay
+  
+	  setTimeout(() => {
+		alertBox.style.display = 'none';
+		modalOverlay.style.display = 'none'; // Hide the overlay
+	  }, 600);
 	});
-}
+  }
 
 function setTextContrast(color) {
     const hex = color.replace('#', '');
@@ -461,20 +460,18 @@ function shareColors() {
 	document.body.appendChild(downloadLink);
 	downloadLink.click();
 	document.body.removeChild(downloadLink);
+	const alertBox = document.getElementById('shareAlert');
+	const modalOverlay = document.getElementById('modalOverlay2');
+	alertBox.style.color = '#FFFFFF'; // Set text color to white for contrast
+	alertBox.innerHTML = '<b>Downloaded!</b>'; // Set the alert message
+	alertBox.style.display = 'block';
+	modalOverlay.style.display = 'flex'; // Show the overlay
+  
 	setTimeout(() => {
-		const alertBox = document.getElementById('shareAlert');
-
-		// Example of dynamically setting the alert style based on primary color
-		const primaryColor = document.getElementById('primaryHex').textContent;
-		alertBox.style.color = '#FFFFFF'; // Set text color to white for contrast
-		alertBox.style.display = 'block';
-
-		// Hide the custom alert after 2 seconds
-		setTimeout(() => {
-			alertBox.style.display = 'none';
-		}, 2000);
-	});
-}
+	  alertBox.style.display = 'none';
+	  modalOverlay.style.display = 'none'; // Hide the overlay
+	}, 600);
+  }
 
 function hexToHSL(H) {
     // Convert hex to RGB first
@@ -551,50 +548,51 @@ const colorAdjectives = {
 	'violet': ['Grape', 'Lilac', 'Fuchsia'],
 	'deep violet': ['Purple', 'Eggplant', 'Majesty'],
 	'violet-magenta': ['Mauve', 'Raspberry', 'Magenta'],
-	'magenta': ['Fuchsia', 'Pink', 'Hot Pink'],
+	'magenta': ['Fuchsia', 'Pink', 'Hot'],
 	'magenta-pink': ['Rose', 'Cerise', 'Bubblegum'],
 	'pink': ['Blush', 'Carnation', 'Flamingo'],
 	'pink-red': ['Coral', 'Salmon', 'Peach'],
-	'red-pink': ['Watermelon', 'Strawberry', 'Ruby Red'],
+	'red-pink': ['Watermelon', 'Strawberry', 'Ruby'],
 	'neutral': ['Slate', 'Taupe', 'Charcoal']
   };
 
   const colorEmotions = {
-	'deep red': ['Passionate', 'Intense', 'Dramatic'],
-	'red': ['Energetic', 'Cool', 'Vibrant'],
-	'red-orange': ['Adventurous', 'Ironic', 'Dynamic'],
-	'orange-red': ['Exciting', 'Lively', 'Fiery'],
-	'bright orange': ['Cheerful', 'Friendly', 'Inviting'],
-	'orange': ['Playful', 'Cozy', 'Welcoming'],
-	'orange-yellow': ['Optimistic', 'Sunny', 'Falling'],
-	'yellow-orange': ['Joyful', 'Energetic', 'Vibrant'],
-	'pale yellow': ['Soft', 'Soothing', 'Delicate'],
-	'light yellow': ['Light-hearted', 'Airy', 'Fresh'],
-	'yellow-green': ['Zesty', 'Lively', 'Refreshing'],
-	'lime green': ['Vivid', 'Electric', 'Sharp'],
-	'green': ['Natural', 'Stable', 'Prosperous'],
-	'green-cyan': ['Refreshing', 'Crisp', 'Minty'],
-	'cyan-green': ['Soothing', 'Cool', 'Serene'],
-	'light cyan': ['Peaceful', 'Airy', 'Light'],
-	'cyan': ['Calm', 'Refreshing', 'Bright'],
-	'cyan-blue': ['Dreamy', 'Serene', 'Majestic'],
-	'sky blue': ['Hopeful', 'Tranquil', 'Open'],
-	'deep sky blue': ['Awesome', 'Expansive', 'Inspiring'],
-	'blue': ['Trustworthy', 'Dependable', 'Steady'],
-	'dark blue': ['Sophisticated', 'Powerful', 'Mysterious'],
-	'indigo': ['Intuitive', 'Perceptive', 'Deep'],
-	'indigo-violet': ['Mystical', 'Magical', 'Enigmatic'],
-	'violet-indigo': ['Creative', 'Imaginative', 'Inspirational'],
-	'violet': ['Royal', 'Luxurious', 'Noble'],
-	'deep violet': ['Dramatic', 'Profound', 'Exquisite'],
-	'violet-magenta': ['Charming', 'Enchanting', 'Fascinating'],
-	'magenta': ['Vibrant', 'Bold', 'Exciting'],
-	'magenta-pink': ['Playful', 'Loving', 'Fun'],
-	'pink': ['Sweet', 'Romantic', 'Gentle'],
-	'pink-red': ['Warm', 'Tender', 'Soft'],
-	'red-pink': ['Lively', 'Passionate', 'Energetic'],
-	'neutral': ['Balanced', 'Neutral', 'Versatile']
-  };
+	'deep red': ['Passionate', 'Intense', 'Dramatic', 'Bold', 'Powerful', 'Provocative', 'Daring', 'Sensual'],
+	'red': ['Energetic', 'Cool', 'Vibrant', 'Ambitious', 'Confident', 'Strong', 'Courageous', 'Motivated'],
+	'red-orange': ['Adventurous', 'Ironic', 'Dynamic', 'Spontaneous', 'Innovative', 'Youthful', 'Eager', 'Brave'],
+	'orange-red': ['Exciting', 'Lively', 'Fiery', 'Bold', 'Determined', 'Enthusiastic', 'Impulsive', 'Warmhearted'],
+	'bright orange': ['Cheerful', 'Friendly', 'Inviting', 'Sociable', 'Enthusiastic', 'Exuberant', 'Gregarious', 'Affable'],
+	'orange': ['Playful', 'Cozy', 'Welcoming', 'Comforting', 'Festive', 'Genial', 'Jovial', 'Amiable'],
+	'orange-yellow': ['Optimistic', 'Sunny', 'Falling', 'Positive', 'Hopeful', 'Radiant', 'Ebullient', 'Lighthearted'],
+	'yellow-orange': ['Joyful', 'Energetic', 'Vibrant', 'Zesty', 'Sparkling', 'Vivid', 'Sprightly', 'Effervescent'],
+	'pale yellow': ['Soft', 'Soothing', 'Delicate', 'Gentle', 'Tender', 'Tranquil', 'Mellow', 'Subtle'],
+	'light yellow': ['Earthy', 'Airy', 'Fresh', 'Wholesome', 'Rejuvenating', 'Nourishing', 'Revitalizing', 'Pristine'],
+	'yellow-green': ['Zesty', 'Lively', 'Refreshing', 'Vigorous', 'Spry', 'Peppy', 'Bouncy', 'Vital'],
+	'lime green': ['Vivid', 'Electric', 'Sharp', 'Luminous', 'Radiant', 'Striking', 'Dazzling', 'Brilliant'],
+	'green': ['Natural', 'Stable', 'Prosperous', 'Grounded', 'Harmonious', 'Thriving', 'Fertile', 'Abundant'],
+	'green-cyan': ['Refreshing', 'Crisp', 'Minty', 'Invigorating', 'Pure', 'Clear', 'Brisk', 'Reviving'],
+	'cyan-green': ['Soothing', 'Cool', 'Serene', 'Tranquil', 'Mild', 'Placid', 'Restful', 'Pacifying'],
+	'light cyan': ['Peaceful', 'Airy', 'Light', 'Serene', 'Ethereal', 'Delicate', 'Tranquil', 'Luminous'],
+	'cyan': ['Calm', 'Refreshing', 'Bright', 'Clear', 'Lucid', 'Tranquil', 'Soothing', 'Pristine'],
+	'cyan-blue': ['Dreamy', 'Exalted', 'Majestic', 'Ethereal', 'Lofty', 'Serene', 'Noble', 'Elevated'],
+	'sky blue': ['Hopeful', 'Tranquil', 'Open', 'Expansive', 'Liberating', 'Boundless', 'Serene', 'Peaceful'],
+	'deep sky blue': ['Awesome', 'Expansive', 'Inspiring', 'Limitless', 'Majestic', 'Elevating', 'Breathtaking', 'Vast'],
+	'blue': ['Trustworthy', 'Dependable', 'Steady', 'Loyal', 'Committed', 'Reliable', 'Faithful', 'True'],
+	'dark blue': ['Sophisticated', 'Powerful', 'Mysterious', 'Elegant', 'Noble', 'Dignified', 'Stately', 'Refined'],
+	'indigo': ['Intuitive', 'Perceptive', 'Deep', 'Thoughtful', 'Philosophical', 'Insightful', 'Reflective', 'Contemplative'],
+	'indigo-violet': ['Mystical', 'Magical', 'Enigmatic', 'Spiritual', 'Transcendent', 'Otherworldly', 'Mysterious', 'Esoteric'],
+	'violet-indigo': ['Creative', 'Imaginative', 'Inspirational', 'Innovative', 'Visionary', 'Artistic', 'Inventive', 'Original'],
+	'violet': ['Royal', 'Luxurious', 'Noble', 'Elegant', 'Sophisticated', 'Regal', 'Majestic', 'Prestigious'],
+	'deep violet': ['Dramatic', 'Profound', 'Exquisite', 'Intense', 'Enriching', 'Soulful', 'Passionate', 'Captivating'],
+	'violet-magenta': ['Charming', 'Enchanting', 'Fascinating', 'Alluring', 'Captivating', 'Beguiling', 'Enticing', 'Mesmerizing'],
+	'magenta': ['Vibrant', 'Bold', 'Exciting', 'Daring', 'Vivid', 'Expressive', 'Flamboyant', 'Dynamic'],
+	'magenta-pink': ['Playful', 'Loving', 'Fun', 'Affectionate', 'Warm', 'Caring', 'Joyous', 'Heartfelt'],
+	'pink': ['Gracious', 'Romantic', 'Gentle', 'Tender', 'Affectionate', 'Delicate', 'Feminine', 'Sweet'],
+	'pink-red': ['Calm', 'Tender', 'Soft', 'Warm', 'Gentle', 'Compassionate', 'Understanding', 'Soothing'],
+	'red-pink': ['Lively', 'Passionate', 'Energetic', 'Vibrant', 'Fiery', 'Intense', 'Zealous', 'Heated'],
+	'neutral': ['Balanced', 'Neutral', 'Versatile', 'Flexible', 'Adaptable', 'Unbiased', 'Impartial', 'Equitable']
+};
+
   
   
   function generateColorName(h, s, l) {
