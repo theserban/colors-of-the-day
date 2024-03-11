@@ -348,7 +348,6 @@ function shareColors() {
 	const svg = document.createElementNS(svgNS, 'svg');
 	svg.setAttribute('width', '2000');
 	svg.setAttribute('height', '1600');
-
 	const primaryHex = document.getElementById('primaryHex').textContent;
 	const secondaryHex = document.getElementById('secondaryHex').textContent;
 	const selectedDate = document.getElementById('datePicker').value;
@@ -462,7 +461,7 @@ function shareColors() {
 	document.body.removeChild(downloadLink);
 	const alertBox = document.getElementById('shareAlert');
 	const modalOverlay = document.getElementById('modalOverlay2');
-	alertBox.style.color = '#FFFFFF'; // Set text color to white for contrast
+	alertBox.style.color = 'var(--text-color)'; // Set text color to white for contrast
 	alertBox.innerHTML = '<b>Downloaded!</b>'; // Set the alert message
 	alertBox.style.display = 'block';
 	modalOverlay.style.display = 'flex'; // Show the overlay
