@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.form-control:hover{
+  background-color: var(--button-hover-bg-color);
+}
+
 .flatpickr-calendar {
   background: transparent;
   opacity: 0;

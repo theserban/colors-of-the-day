@@ -1,236 +1,3 @@
-function setTextContrast(color) {
-    const hex = color.replace('#', '');
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness > 155 ? '#363636' : '#FFF'; // Adjust threshold as needed
-}
-
-function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
-	const primaryColorBox = document.getElementById('primaryColor');
-	const secondaryColorBox = document.getElementById('secondaryColor');
-	primaryColorBox.style.backgroundColor = primaryColor;
-	secondaryColorBox.style.backgroundColor = secondaryColor;
-	document.getElementById('primaryHex').textContent = primaryHex;
-	document.getElementById('secondaryHex').textContent = secondaryHex;
-	primaryColorBox.style.color = setTextContrast(primaryHex);
-	secondaryColorBox.style.color = setTextContrast(secondaryHex);
-
-	// Set the primary color as a CSS variable
-	document.documentElement.style.setProperty('--primary-color', primaryColor);
-	document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-}
-
-function generateSeed(date) {
-	var hash = 0;
-	for (var i = 0; i < date.length; i++) {
-		var char = date.charCodeAt(i);
-		hash = ((hash << 5) - hash) + char;
-		hash = hash & hash; // Convert to 32bit integer
-	}
-	return hash;
-}
-
-function pseudoRandom(seed) {
-	var x = Math.sin(seed++) * 10000;
-	return x - Math.floor(x);
-}
-
-
-function generateOppositeColorsForDate(date) {
-
-    const seed = generateSeed(date);
-    const baseHue = Math.floor(pseudoRandom(seed) * 360);
-    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60; // Saturation between 60% and 100%
-    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40; // Lightness between 40% and 60%
-    
-    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
-    const secondaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
-    
-    const primaryHex = HSLToHex(baseHue, saturation, lightness);
-    const secondaryHex = HSLToHex((baseHue + 180) % 360, saturation, lightness);
-    
-    return { primaryColor, secondaryColor, primaryHex, secondaryHex };
-}
-
-// Analogous Harmony
-function generateAnalogousColorsForDate(date) {
-	const seed = generateSeed(date);
-	const baseHue = Math.floor(pseudoRandom(seed) * 360);
-	const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
-	const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
-
-	const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
-	const secondaryColor = `hsl(${(baseHue + 30) % 360}, ${saturation}%, ${lightness}%)`; // +30 degrees for analogous
-
-	return {
-		primaryColor,
-		secondaryColor,
-		primaryHex: HSLToHex(baseHue, saturation, lightness),
-		secondaryHex: HSLToHex((baseHue + 30) % 360, saturation, lightness)
-	};
-}
-
-// Triadic Harmony
-function generateTriadicColorsForDate(date) {
-	const seed = generateSeed(date);
-	const baseHue = Math.floor(pseudoRandom(seed) * 360);
-	const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
-	const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
-
-	const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
-	const secondaryColor = `hsl(${(baseHue + 120) % 360}, ${saturation}%, ${lightness}%)`; // +120 degrees for triadic
-
-	return {
-		primaryColor,
-		secondaryColor,
-		primaryHex: HSLToHex(baseHue, saturation, lightness),
-		secondaryHex: HSLToHex((baseHue + 120) % 360, saturation, lightness)
-	};
-}
-
-// Split-Complementary Harmony
-function generateSplitComplementaryColorsForDate(date) {
-	const seed = generateSeed(date);
-	const baseHue = Math.floor(pseudoRandom(seed) * 360);
-	const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
-	const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
-
-	const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
-	return {
-		primaryColor,
-		secondaryColor: splitComp1,
-		primaryHex: HSLToHex(baseHue, saturation, lightness),
-		secondaryHex: HSLToHex((baseHue + 150) % 360, saturation, lightness)
-	};
-}
-
-// Tetradic Harmony
-function generateTetradicColorsForDate(date) {
-	const seed = generateSeed(date);
-	const baseHue = Math.floor(pseudoRandom(seed) * 360);
-	const secondHue = (baseHue + 120) % 360; // +120 degrees for the second color
-	const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
-	const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
-
-	// The first complementary pair
-	const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
-	const complementaryColor = `hsl(${(baseHue + 180) % 360}, ${saturation}%, ${lightness}%)`;
-
-	return {
-		primaryColor,
-		secondaryColor: complementaryColor,
-		primaryHex: HSLToHex(baseHue, saturation, lightness),
-		secondaryHex: HSLToHex((baseHue + 180) % 360, saturation, lightness)
-	};
-}
-
-// Square Harmony
-function generateSquareColorsForDate(date) {
-	const seed = generateSeed(date);
-	const baseHue = Math.floor(pseudoRandom(seed) * 360);
-	const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60;
-	const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40;
-
-	// Four colors spaced evenly (90 degrees apart)
-	const secondHue = (baseHue + 90) % 360;
-
-	return {
-		primaryColor: `hsl(${baseHue}, ${saturation}%, ${lightness}%)`,
-		secondaryColor: `hsl(${secondHue}, ${saturation}%, ${lightness}%)`,
-		primaryHex: HSLToHex(baseHue, saturation, lightness),
-		secondaryHex: HSLToHex(secondHue, saturation, lightness)
-	};
-}
-
-function HSLToHex(h, s, l) {
-	l /= 100;
-	const a = s * Math.min(l, 1 - l) / 100;
-	const f = n => {
-		const k = (n + h / 30) % 12;
-		const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-		return Math.round(255 * color).toString(16).padStart(2, '0');
-	};
-	return `#${f(0)}${f(8)}${f(4)}`;
-}
-
-function storeColorsForDate(date, colors) {
-	localStorage.setItem(date, JSON.stringify(colors));
-}
-
-function getColorsForDate(date) {
-	const colors = localStorage.getItem(date);
-	return colors ? JSON.parse(colors) : null;
-}
-
-function changeDate(date) {
-	let colors = getColorsForDate(date);
-	if (!colors) {
-		// Randomly select a color harmony
-		const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 3); // Generate a number between 0 and 2
-		switch (harmonySelector) {
-			case 0:
-				colors = generateOppositeColorsForDate(date);
-				break;
-			case 1:
-				colors = generateAnalogousColorsForDate(date);
-				break;
-			case 2:
-				colors = generateTriadicColorsForDate(date);
-				break;
-			case 3:
-				colors = generateSplitComplementaryColorsForDate(date);
-				break;
-			case 4:
-				colors = generateTetradicColorsForDate(date);
-				break;
-			case 5:
-				colors = generateSquareColorsForDate(date);
-				break;
-		}
-		storeColorsForDate(date, colors);
-	}
-	displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
-	adjustCountdownVisibility(date);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-	    // Adjust to use local date components
-        const today = new Date();
-        const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
-        
-        document.getElementById('currentDate').textContent = today.toLocaleDateString();
-        document.getElementById('datePicker').max = localDateStr;
-        document.getElementById('datePicker').value = localDateStr;
-        changeDate(localDateStr); // Initialize with stored or new colors for today
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        // Ensure the switch reflects the current theme
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.checked = savedTheme === 'dark';
-        themeToggle.addEventListener('click', toggleTheme);
-});
-
-function copyToClipboard(hexId, colorContext) {
-	const hexCode = document.querySelector(hexId).textContent;
-	navigator.clipboard.writeText(hexCode).then(() => {
-		// Select the custom alert element
-		const alertBox = document.getElementById('customAlert');
-		// Get the color based on the color context
-		const color = document.getElementById(colorContext).style.backgroundColor;
-		// Set the custom alert's background color using CSS variables
-		alertBox.style.backgroundColor = `var(--bg-color, ${color})`;
-		// Set text color to white
-		alertBox.style.color = 'white';
-		// Show the custom alert
-		alertBox.style.display = 'block';
-
-		setTimeout(() => {
-			alertBox.style.display = 'none';
-		}, 2000);
-	});
-}
 
 
 function startCountdown() {
@@ -351,6 +118,139 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	document.querySelector("#datePicker").setAttribute("autocomplete", "nope");
+});
+
+function copyToClipboard(hexId, colorContext) {
+	const hexCode = document.querySelector(hexId).textContent;
+	navigator.clipboard.writeText(hexCode).then(() => {
+		// Select the custom alert element
+		const alertBox = document.getElementById('customAlert');
+		// Get the color based on the color context
+		const color = document.getElementById(colorContext).style.backgroundColor;
+		// Set the custom alert's background color using CSS variables
+		alertBox.style.backgroundColor = `var(--bg-color, ${color})`;
+		// Set text color to white
+		alertBox.style.color = 'white';
+		// Show the custom alert
+		alertBox.style.display = 'block';
+
+		setTimeout(() => {
+			alertBox.style.display = 'none';
+		}, 2000);
+	});
+}
+
+function setTextContrast(color) {
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 155 ? '#363636' : '#FFF'; // Adjust threshold as needed
+}
+
+function generateSeed(date) {
+	var hash = 0;
+	for (var i = 0; i < date.length; i++) {
+		var char = date.charCodeAt(i);
+		hash = ((hash << 5) - hash) + char;
+		hash = hash & hash; // Convert to 32bit integer
+	}
+	return hash;
+}
+
+function pseudoRandom(seed) {
+	var x = Math.sin(seed++) * 10000;
+	return x - Math.floor(x);
+}
+
+function HSLToHex(h, s, l) {
+	l /= 100;
+	const a = s * Math.min(l, 1 - l) / 100;
+	const f = n => {
+		const k = (n + h / 30) % 12;
+		const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+		return Math.round(255 * color).toString(16).padStart(2, '0');
+	};
+	return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function generateColorsForDate(date, harmony) {
+    const seed = generateSeed(date);
+    const baseHue = Math.floor(pseudoRandom(seed) * 360);
+    const saturation = Math.floor(pseudoRandom(seed + 1) * 40) + 60; // Saturation between 60% and 100%
+    const lightness = Math.floor(pseudoRandom(seed + 2) * 20) + 40; // Lightness between 40% and 60%
+    let secondaryHue;
+
+    switch (harmony) {
+        case 0: // Opposite Harmony
+            secondaryHue = (baseHue + 180) % 360;
+            break;
+        case 1: // Analogous Harmony
+            secondaryHue = (baseHue + 30) % 360;
+            break;
+        case 2: // Triadic Harmony
+            secondaryHue = (baseHue + 120) % 360;
+            break;
+        case 3: // Split-Complementary Harmony
+            secondaryHue = (baseHue + 150) % 360;
+            break;
+        case 4: // Tetradic Harmony
+            secondaryHue = (baseHue + 90) % 360; // For simplicity, using a fixed offset
+            break;
+        case 5: // Square Harmony
+            secondaryHue = (baseHue + 90) % 360;
+            break;
+        default:
+            secondaryHue = baseHue; // Fallback to the same hue
+    }
+
+    const primaryColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
+    const secondaryColor = `hsl(${secondaryHue}, ${saturation}%, ${lightness}%)`;
+
+    return {
+        primaryColor,
+        secondaryColor,
+        primaryHex: HSLToHex(baseHue, saturation, lightness),
+        secondaryHex: HSLToHex(secondaryHue, saturation, lightness)
+    };
+}
+
+function changeDate(date) {
+    let colors = getColorsForDate(date);
+    if (!colors) {
+        // Randomly select a color harmony among the available ones (0 to 5)
+        const harmonySelector = Math.floor(pseudoRandom(generateSeed(date) + 3) * 6); // Corrected to generate a number between 0 and 5
+        colors = generateColorsForDate(date, harmonySelector);
+        storeColorsForDate(date, colors);
+    }
+    displayColors(colors.primaryColor, colors.secondaryColor, colors.primaryHex, colors.secondaryHex);
+    adjustCountdownVisibility(date);
+}
+
+function storeColorsForDate(date, colors) {
+    localStorage.setItem(date, JSON.stringify(colors));
+}
+
+function getColorsForDate(date) {
+    const colors = localStorage.getItem(date);
+    return colors ? JSON.parse(colors) : null;
+}
+document.addEventListener('DOMContentLoaded', () => {
+	    // Adjust to use local date components
+        const today = new Date();
+        const localDateStr = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+        
+        document.getElementById('currentDate').textContent = today.toLocaleDateString();
+        document.getElementById('datePicker').max = localDateStr;
+        document.getElementById('datePicker').value = localDateStr;
+        changeDate(localDateStr); // Initialize with stored or new colors for today
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Ensure the switch reflects the current theme
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.checked = savedTheme === 'dark';
+        themeToggle.addEventListener('click', toggleTheme);
 });
 
 function parseColorValues(colorValues) {
@@ -574,4 +474,239 @@ function shareColors() {
 			alertBox.style.display = 'none';
 		}, 2000);
 	});
+}
+
+function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+        r = parseInt(H[1] + H[1], 16);
+        g = parseInt(H[2] + H[2], 16);
+        b = parseInt(H[3] + H[3], 16);
+    } else if (H.length == 7) {
+        r = parseInt(H[1] + H[2], 16);
+        g = parseInt(H[3] + H[4], 16);
+        b = parseInt(H[5] + H[6], 16);
+    }
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    // Then, HSL from RGB
+    let cmin = Math.min(r,g,b),
+        cmax = Math.max(r,g,b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+
+    if (delta == 0)
+        h = 0;
+    else if (cmax == r)
+        h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+        h = (b - r) / delta + 2;
+    else
+        h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0)
+        h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return {h, s, l};
+}
+
+const colorAdjectives = {
+	'deep red': ['Blood', 'Wine', 'Cranberry'],
+	'red': ['Crimson', 'Ruby', 'Scarlet'],
+	'red-orange': ['Flame', 'Vermilion', 'Coral'],
+	'orange-red': ['Sunset', 'Scarlet', 'Persimmon'],
+	'bright orange': ['Tangerine', 'Marigold', 'Saffron'],
+	'orange': ['Pumpkin', 'Apricot', 'Carrot'],
+	'orange-yellow': ['Amber', 'Gold', 'Mustard'],
+	'yellow-orange': ['Sunshine', 'Citrine', 'Mango'],
+	'pale yellow': ['Lemonade', 'Buttercream', 'Daffodil'],
+	'light yellow': ['Pastel', 'Canary', 'Sunflower'],
+	'yellow-green': ['Lime', 'Chartreuse', 'Pear'],
+	'lime green': ['Neon', 'Electric', 'Highlighter'],
+	'green': ['Emerald', 'Forest', 'Jade'],
+	'green-cyan': ['Mint', 'Seafoam', 'Pistachio'],
+	'cyan-green': ['Turquoise', 'Aquamarine', 'Teal'],
+	'light cyan': ['Sky', 'Ice', 'Powder'],
+	'cyan': ['Teal', 'Cerulean', 'Capri'],
+	'cyan-blue': ['Arctic', 'Sapphire', 'Peacock'],
+	'sky blue': ['Azure', 'Daybreak', 'Celeste'],
+	'deep sky blue': ['Cobalt', 'Ocean', 'Lapis'],
+	'blue': ['Navy', 'Royal', 'Azure'],
+	'dark blue': ['Midnight', 'Indigo', 'Prussian'],
+	'indigo': ['Violet', 'Twilight', 'Ink'],
+	'indigo-violet': ['Plum', 'Orchid', 'Mulberry'],
+	'violet-indigo': ['Amethyst', 'Lavender', 'Wisteria'],
+	'violet': ['Grape', 'Lilac', 'Fuchsia'],
+	'deep violet': ['Purple', 'Eggplant', 'Majesty'],
+	'violet-magenta': ['Mauve', 'Raspberry', 'Magenta'],
+	'magenta': ['Fuchsia', 'Pink', 'Hot Pink'],
+	'magenta-pink': ['Rose', 'Cerise', 'Bubblegum'],
+	'pink': ['Blush', 'Carnation', 'Flamingo'],
+	'pink-red': ['Coral', 'Salmon', 'Peach'],
+	'red-pink': ['Watermelon', 'Strawberry', 'Ruby Red'],
+	'neutral': ['Slate', 'Taupe', 'Charcoal']
+  };
+
+  const colorEmotions = {
+	'deep red': ['Passionate', 'Intense', 'Dramatic'],
+	'red': ['Energetic', 'Cool', 'Vibrant'],
+	'red-orange': ['Adventurous', 'Ironic', 'Dynamic'],
+	'orange-red': ['Exciting', 'Lively', 'Fiery'],
+	'bright orange': ['Cheerful', 'Friendly', 'Inviting'],
+	'orange': ['Playful', 'Cozy', 'Welcoming'],
+	'orange-yellow': ['Optimistic', 'Sunny', 'Falling'],
+	'yellow-orange': ['Joyful', 'Energetic', 'Vibrant'],
+	'pale yellow': ['Soft', 'Soothing', 'Delicate'],
+	'light yellow': ['Light-hearted', 'Airy', 'Fresh'],
+	'yellow-green': ['Zesty', 'Lively', 'Refreshing'],
+	'lime green': ['Vivid', 'Electric', 'Sharp'],
+	'green': ['Natural', 'Stable', 'Prosperous'],
+	'green-cyan': ['Refreshing', 'Crisp', 'Minty'],
+	'cyan-green': ['Soothing', 'Cool', 'Serene'],
+	'light cyan': ['Peaceful', 'Airy', 'Light'],
+	'cyan': ['Calm', 'Refreshing', 'Bright'],
+	'cyan-blue': ['Dreamy', 'Serene', 'Majestic'],
+	'sky blue': ['Hopeful', 'Tranquil', 'Open'],
+	'deep sky blue': ['Awesome', 'Expansive', 'Inspiring'],
+	'blue': ['Trustworthy', 'Dependable', 'Steady'],
+	'dark blue': ['Sophisticated', 'Powerful', 'Mysterious'],
+	'indigo': ['Intuitive', 'Perceptive', 'Deep'],
+	'indigo-violet': ['Mystical', 'Magical', 'Enigmatic'],
+	'violet-indigo': ['Creative', 'Imaginative', 'Inspirational'],
+	'violet': ['Royal', 'Luxurious', 'Noble'],
+	'deep violet': ['Dramatic', 'Profound', 'Exquisite'],
+	'violet-magenta': ['Charming', 'Enchanting', 'Fascinating'],
+	'magenta': ['Vibrant', 'Bold', 'Exciting'],
+	'magenta-pink': ['Playful', 'Loving', 'Fun'],
+	'pink': ['Sweet', 'Romantic', 'Gentle'],
+	'pink-red': ['Warm', 'Tender', 'Soft'],
+	'red-pink': ['Lively', 'Passionate', 'Energetic'],
+	'neutral': ['Balanced', 'Neutral', 'Versatile']
+  };
+  
+  
+  function generateColorName(h, s, l) {
+
+	let colorRange;
+	if ((h >= 346 && h <= 360) || (h >= 0 && h <= 10)) {
+	  colorRange = 'deep red';
+	} else if (h >= 11 && h <= 15) {
+	  colorRange = 'red';
+	} else if (h >= 16 && h <= 22) {
+	  colorRange = 'red-orange';
+	} else if (h >= 23 && h <= 30) {
+	  colorRange = 'orange-red';
+	} else if (h >= 31 && h <= 38) {
+	  colorRange = 'bright orange';
+	} else if (h >= 39 && h <= 45) {
+	  colorRange = 'orange';
+	} else if (h >= 46 && h <= 52) {
+	  colorRange = 'orange-yellow';
+	} else if (h >= 53 && h <= 60) {
+	  colorRange = 'yellow-orange';
+	} else if (h >= 61 && h <= 67) {
+	  colorRange = 'pale yellow';
+	} else if (h >= 68 && h <= 70) {
+	  colorRange = 'light yellow';
+	} else if (h >= 71 && h <= 79) {
+	  colorRange = 'yellow-green';
+	} else if (h >= 80 && h <= 110) {
+	  colorRange = 'lime green';
+	} else if (h >= 111 && h <= 140) {
+	  colorRange = 'green';
+	} else if (h >= 141 && h <= 150) {
+	  colorRange = 'green-cyan';
+	} else if (h >= 151 && h <= 163) {
+	  colorRange = 'cyan-green';
+	} else if (h >= 164 && h <= 173) {
+	  colorRange = 'light cyan';
+	} else if (h >= 174 && h <= 193) {
+	  colorRange = 'cyan';
+	} else if (h >= 194 && h <= 205) {
+	  colorRange = 'cyan-blue';
+	} else if (h >= 206 && h <= 215) {
+	  colorRange = 'sky blue';
+	} else if (h >= 216 && h <= 220) {
+	  colorRange = 'deep sky blue';
+	} else if (h >= 221 && h <= 240) {
+	  colorRange = 'blue';
+	} else if (h >= 241 && h <= 250) {
+	  colorRange = 'dark blue';
+	} else if (h >= 251 && h <= 260) {
+	  colorRange = 'indigo';
+	} else if (h >= 261 && h <= 270) {
+	  colorRange = 'indigo-violet';
+	} else if (h >= 271 && h <= 275) {
+	  colorRange = 'violet-indigo';
+	} else if (h >= 276 && h <= 285) {
+	  colorRange = 'violet';
+	} else if (h >= 286 && h <= 290) {
+	  colorRange = 'deep violet';
+	} else if (h >= 291 && h <= 295) {
+	  colorRange = 'violet-magenta';
+	} else if (h >= 296 && h <= 305) {
+	  colorRange = 'magenta';
+	} else if (h >= 306 && h <= 310) {
+	  colorRange = 'magenta-pink';
+	} else if (h >= 311 && h <= 327) {
+	  colorRange = 'pink';
+	} else if (h >= 328 && h <= 337) {
+	  colorRange = 'pink-red';
+	} else if (h >= 338 && h <= 345) {
+	  colorRange = 'red-pink';
+	} else {
+	  colorRange = 'neutral';
+	}
+	
+const adjectives = colorAdjectives[colorRange];
+  const emotions = colorEmotions[colorRange];
+  
+  const seed = `${h},${s},${l}`;
+  const hash = seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+
+  const index1 = Math.abs(hash % adjectives.length);
+  const index2 = Math.abs((hash + 1) % emotions.length); // Slightly alter the hash for a different index
+  
+  const colorName1 = adjectives[index1];
+  const colorName2 = emotions[index2];
+  
+  return `${colorName2}<br>${colorName1}`;
+
+  }
+
+  function displayColors(primaryColor, secondaryColor, primaryHex, secondaryHex) {
+    const primaryColorBox = document.getElementById('primaryColor');
+    const secondaryColorBox = document.getElementById('secondaryColor');
+    primaryColorBox.style.backgroundColor = primaryColor;
+    secondaryColorBox.style.backgroundColor = secondaryColor;
+    document.getElementById('primaryHex').textContent = primaryHex;
+    document.getElementById('secondaryHex').textContent = secondaryHex;
+    primaryColorBox.style.color = setTextContrast(primaryHex);
+    secondaryColorBox.style.color = setTextContrast(secondaryHex);
+
+    // Assuming HSL values are used for primary and secondary colors
+    const primaryHSL = hexToHSL(primaryHex);
+    const secondaryHSL = hexToHSL(secondaryHex);
+
+    // Generate color names
+    const primaryColorName = generateColorName(primaryHSL.h, primaryHSL.s, primaryHSL.l);
+    const secondaryColorName = generateColorName(secondaryHSL.h, secondaryHSL.s, secondaryHSL.l);
+
+    // Update the UI with the color names
+	primaryColorBox.querySelector('.colorName').innerHTML = primaryColorName;
+	secondaryColorBox.querySelector('.colorName').innerHTML = secondaryColorName;	
+	document.documentElement.style.setProperty('--primary-color', primaryColor);
+	document.documentElement.style.setProperty('--secondary-color', secondaryColor);
 }
