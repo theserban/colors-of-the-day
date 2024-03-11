@@ -568,7 +568,7 @@ const colorAdjectives = {
 	'pale yellow': ['Soft', 'Soothing', 'Delicate', 'Gentle', 'Tender', 'Tranquil', 'Mellow', 'Subtle'],
 	'light yellow': ['Earthy', 'Airy', 'Fresh', 'Wholesome', 'Rejuvenating', 'Nourishing', 'Revitalizing', 'Pristine'],
 	'yellow-green': ['Zesty', 'Lively', 'Refreshing', 'Vigorous', 'Spry', 'Peppy', 'Bouncy', 'Vital'],
-	'lime green': ['Vivid', 'Electric', 'Sharp', 'Luminous', 'Radiant', 'Striking', 'Dazzling', 'Brilliant'],
+	'lime green': ['Vivid', 'Sharp', 'Luminous', 'Radiant', 'Striking', 'Dazzling', 'Brilliant'],
 	'green': ['Natural', 'Stable', 'Prosperous', 'Grounded', 'Harmonious', 'Thriving', 'Fertile', 'Abundant'],
 	'green-cyan': ['Refreshing', 'Crisp', 'Minty', 'Invigorating', 'Pure', 'Clear', 'Brisk', 'Reviving'],
 	'cyan-green': ['Soothing', 'Cool', 'Serene', 'Tranquil', 'Mild', 'Placid', 'Restful', 'Pacifying'],
