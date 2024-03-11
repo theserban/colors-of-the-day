@@ -94,7 +94,6 @@ body {
 }
 
 .colorName  {
-
   font-size: 0.8em;
 }
 
@@ -268,11 +267,7 @@ input:checked+.slider:before {
       height: auto;
       padding-top: 20px;
       }
-
-      br {
-          display: none;
-      }
-
+      
       #countdownContainer {
           padding: 0em;
           text-align: center;
