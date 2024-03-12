@@ -34,14 +34,14 @@
 
 body {
   font-family: 'Lexend', sans-serif;
-  display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
-  padding: 0;
   margin: 0;
   background-color: var(--background-color);
   color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .github-logo {
